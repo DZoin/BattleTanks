@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="38" tilewidth="16" tileheight="16" nextobjectid="9">
+ <tileset firstgid="1" name="test" tilewidth="16" tileheight="16" tilecount="400" columns="25">
+  <image source="C:/Users/kutsulan/Downloads/NES - Battle City - General Sprites.png" width="400" height="256"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="38">
+  <data encoding="base64" compression="zlib">
+   eJztmEtuwzAMRHWFbNw7CEVPkYUPYQO5hm/fBLAAdkyKo4+tIOhikDhmpHmi/vcQwh10e2p6amvQTSmzpTyrjlQuMmh1sh4eQokjEhyTokjU+24cyBI/gCOGsRyPcORAeRwx1HNo9dXmQ/Kw8ZKjlJ2J0eLZ8q9S65yq9esSjeZnOOTvy64rvP/skn3F6jczmYfFUI+1VX7X8styzJkcWP5RvTi09xijxc3hyIJ96CwWxmNas9KztW5pDC9F4S+KzwjPC8SVcngeSzlkm6JHy7f1bgtcjnpyJBaNQ2t/+Yws62COKZTlA9+t4S9Xbw5mnOO86nFgftZGDsYjM+9qHDVzFa4n7BzGeGRiNN/opYQByxrJUcNirfulHN+7vP9ZynnL8XgxbP1fu2r95zhkXjCO3b+0+mLF9B+ML9mDbeHYFi05ePU9PF8y+9lWyTrQA3PO/VSO2vHRqhZP2rrInHeuZvDOxBbHlSzevMKc7XP7lEjw9GbAexm2TT2OM1ly/SeNdfZMz3CcweIxJI5crrT7RI+DOYfWMOTuuKxzEsrjqO2rrLz7uR4cTJv1FDsGWjh6tHWt99EcZyjH8a/30i8rVrBe
+  </data>
+ </layer>
+</map>
