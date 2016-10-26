@@ -1,12 +1,9 @@
-#include "Graphics.h"
+#include "Game.h"
 
 int main(int argc, char* args[])
 {
-	Graphics graphics("Battle Tanks", 800, 600);
+	Game game;
+	int result = game.gameLoop();
 
-	while (true)
-	{
-	}
-
-	return 0;
+	return result;
 }
