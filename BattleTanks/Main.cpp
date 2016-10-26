@@ -3,7 +3,7 @@
 int main(int argc, char* args[])
 {
 	Game game;
-	
+	int result = game.gameLoop();
 
-	return 0;
+	return result;
 }

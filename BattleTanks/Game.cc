@@ -16,15 +16,14 @@ namespace
 Game::Game()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	gameLoop();
 }
 Game::~Game()
 {
 
 }
-void Game::gameLoop()
+int Game::gameLoop()
 {
-	Graphics graphics("Battle Tanks", 800, 600);
+	Canvas graphics("Battle Tanks", 800, 600);
 	Input input;
 	SDL_Event event;
 
@@ -48,12 +47,12 @@ void Game::gameLoop()
 			}
 			else if (event.type == SDL_QUIT)
 			{
-				return;
+				return EXIT;
 			} 
 		}
 		if (input.wasKeyPressed(SDL_SCANCODE_ESCAPE) == true)
 		{
-			return;
+			return EXIT;
 		}
 		const int CURRENT_TIME_MS = SDL_GetTicks();
 		int ELAPSED_TIME_MS = CURRENT_TIME_MS - LAST_UPDATE_TIME;
@@ -62,7 +61,7 @@ void Game::gameLoop()
 		LAST_UPDATE_TIME = CURRENT_TIME_MS;
 	}
 }
-void Game::draw(Graphics &graphics)
+void Game::draw(Canvas &graphics)
 {
 
 }

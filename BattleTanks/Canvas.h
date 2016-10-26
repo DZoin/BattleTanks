@@ -2,11 +2,11 @@
 #include <string>
 #include <SDL.h>
 
-class Graphics
+class Canvas
 {
 public:
-	Graphics(const std::string &title, int width, int height);
-	~Graphics();
+	Canvas(const std::string &title, int width, int height);
+	~Canvas();
 private:
 	std::string _title;
 	int _width;
