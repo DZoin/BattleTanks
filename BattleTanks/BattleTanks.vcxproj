@@ -11,11 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="BasicGun.cpp" />
     <ClCompile Include="Bonus.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Game.cc" />
     <ClCompile Include="Canvas.cc" />
+    <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Input.cc" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Tank.cpp" />
@@ -23,10 +24,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="BasicGun.h" />
     <ClInclude Include="Bonus.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Canvas.h" />
+    <ClInclude Include="Gun.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Tile.h" />
@@ -60,8 +63,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>E:\Uni\BattleTanks\BattleTanks\SDL2-2.0.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Uni\BattleTanks\BattleTanks\SDL2-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Zoin\Documents\UNI - Game Dev\battletanks\BattleTanks\SDL2-2.0.5\include;E:\Uni\BattleTanks\BattleTanks\SDL2-2.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Zoin\Documents\UNI - Game Dev\battletanks\BattleTanks\SDL2-2.0.5\lib\x86;E:\Uni\BattleTanks\BattleTanks\SDL2-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

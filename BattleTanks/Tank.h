@@ -1,10 +1,6 @@
 #pragma once
 #include "Actor.h"
-
-namespace ShotType
-{
-	enum Value {normal = 1};
-}
+#include "Gun.h"
 
 namespace Direction
 {
@@ -16,16 +12,15 @@ class Tank :
 {
 public:
 	Tank();
-	Tank(unsigned x_coord, unsigned y_coord, unsigned shot_power, 
-		unsigned health_points);
-	Tank(unsigned x_coord, unsigned y_coord, unsigned shot_power, 
-		unsigned health_points, ShotType::Value shot_type, Direction::Value direction);
-	~Tank();
+	Tank(int x, int y, int health_points);
+	Tank(int x, int y, int health_points, Gun* gun, Direction::Value direction);
+	virtual ~Tank();
 
-private:
-	unsigned int _shot_power, _health_points;
-	ShotType::Value _shot_type = ShotType::normal;
+protected:
+	//SDL_Texture* _texture = nullptr;
+	int _health_points;
 	Direction::Value _direction = Direction::up;
+	Gun* _gun;
 
 };
 
