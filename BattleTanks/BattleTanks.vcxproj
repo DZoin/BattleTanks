@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cc" />
+    <ClCompile Include="AnimatedActor.cc" />
     <ClCompile Include="BasicGun.cpp" />
     <ClCompile Include="Bonus.cpp" />
     <ClCompile Include="Bullet.cpp" />
@@ -24,11 +26,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="AnimatedActor.h" />
     <ClInclude Include="BasicGun.h" />
     <ClInclude Include="Bonus.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Canvas.h" />
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Tank.h" />
@@ -63,8 +67,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Zoin\Documents\UNI - Game Dev\battletanks\BattleTanks\SDL2-2.0.5\include;E:\Uni\BattleTanks\BattleTanks\SDL2-2.0.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Zoin\Documents\UNI - Game Dev\battletanks\BattleTanks\SDL2-2.0.5\lib\x86;E:\Uni\BattleTanks\BattleTanks\SDL2-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Battle City University Project\battletanks\BattleTanks\SDL2-2.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Battle City University Project\battletanks\BattleTanks\SDL2-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -74,7 +78,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>

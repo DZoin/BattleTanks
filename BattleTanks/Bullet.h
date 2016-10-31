@@ -11,7 +11,7 @@ class Bullet :
 {
 public:
 	Bullet();
-	Bullet(int x, int y, int damage, BulletType::BType);
+	//Bullet(int x, int y, int damage, BulletType::BType);
 	~Bullet();
 	void update();
 	void draw() const;

@@ -23,11 +23,14 @@ Game::~Game()
 }
 int Game::gameLoop()
 {
-	Canvas graphics("Battle Tanks", 800, 600);
+	Canvas canvas("Battle Tanks", 800, 600);
 	Input input;
 	SDL_Event event;
 
-	int LAST_UPDATE_TIME = SDL_GetTicks();  //SDL_GetTick -> gets the number of milliseconds sicne the SDL libraly was initialized
+	_tank = Tank(canvas, 100, 100, 4);
+	_tank2 = Tank(canvas, 700, 500, 4);
+
+	int LAST_UPDATE_TIME = SDL_GetTicks();  //SDL_GetTick -> gets the number of milliseconds since the SDL libraly was initialized
 
 	while (true)
 	{
@@ -61,11 +64,17 @@ int Game::gameLoop()
 															//It can't go higher than 50 FPS
 
 		LAST_UPDATE_TIME = CURRENT_TIME_MS;  //Start the initialization again, before the loop begins a new cicle
+		draw(canvas);
 	}
 }
-void Game::draw(Canvas &graphics)
+void Game::draw(Canvas &canvas)
 {
+	canvas.clear();
 
+	_tank.draw(canvas);
+	_tank2.draw(canvas);
+
+	canvas.flip();
 }
 void Game::update(float elapsedTime)
 {

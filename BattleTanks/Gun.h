@@ -11,4 +11,3 @@ public:
 protected:
 	int _bullet_damage;
 };
-
