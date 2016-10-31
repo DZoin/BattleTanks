@@ -1,17 +1,23 @@
 #pragma once
 #include <SDL_image.h>
+#include <string>
+
+class Canvas;
 
 class Actor
 {
 public:
-	Actor() {}
-	Actor(int x, int y) :
-		_x(x), _y(y) {}
-	virtual ~Actor() {}
-	virtual void update() = 0;
-	virtual void draw() const = 0;
+	Actor();
+	Actor(Canvas &canvas, const std::string &filePath, int sourceX, int sourceY, int width, int height, float posX, float posY);
+	virtual ~Actor();
+	virtual void update();
+	void draw(Canvas &canvas, int x, int y);
+
 
 protected:
-	int _x, _y;
+	SDL_Rect _sourceRect;
+	SDL_Texture* _spriteSheet;
+
+	float _x, _y;
 };
 
