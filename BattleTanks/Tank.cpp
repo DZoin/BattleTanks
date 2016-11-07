@@ -3,25 +3,24 @@
 #include "BasicGun.h"
 #include "AnimatedActor.h"
 
-namespace tank_contants
-{
-	const float MOVE_SPEED = 0.1f;
-}
-
 Tank::Tank(){}
 
-Tank::Tank(Canvas &canvas, float x, float y, int health_points) : Tank(canvas, x, y, health_points, new BasicGun(), Direction::down) {}
+Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Direction::Value direction) : Tank(canvas, filePath, x, y, new BasicGun(), direction) {}
 
-Tank::Tank(Canvas &canvas, float x, float y, int health_points, Gun* gun, Direction::Value direction) : AnimatedActor(canvas, "Content/Sprites/tank.png", 0, 0, 16, 16, x, y, 100)
+Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, Direction::Value direction) : AnimatedActor(canvas, filePath, 0, 0, 16, 16, x, y, 100)
 {
-	canvas.loadImage("Content/Sprites/tank.png");
+	canvas.loadImage(filePath);
 
 	this->_direction = direction;
-	this->_health_points = health_points;
 	this->_gun = gun;
 
 	setUpAnimations();
-	playAnimation("DriveDown");
+	playAnimation();
+}
+
+void Tank::playAnimation(const string& animation)
+{
+	AnimatedActor::playAnimation(animation);
 }
 
 void Tank::setUpAnimations()
@@ -41,7 +40,50 @@ void Tank::setUpAnimations()
 
 void Tank::animationDone(std::string currentAnimation) {}
 
-void Tank::update(float elapsedTime)
+void Tank::moveUp()
+{
+	this->_dy = -tank_constants::NORMAL_SPEED;
+	this->_direction = Direction::up;
+	this->playAnimation(_moveAnimations[_direction]);
+}
+
+void Tank::moveDown() 
+{
+	this->_dy = tank_constants::NORMAL_SPEED;
+	this->_direction = Direction::down;
+	this->playAnimation(_moveAnimations[_direction]);
+}
+
+void Tank::moveRight()
+{
+	this->_dx = tank_constants::NORMAL_SPEED;
+	this->_direction = Direction::right;
+	this->playAnimation(_moveAnimations[_direction]);
+	
+}
+
+void Tank::moveLeft()
+{
+	this->_dx = -tank_constants::NORMAL_SPEED;
+	this->_direction = Direction::left;
+	this->playAnimation(_moveAnimations[_direction]);
+}
+
+void Tank::stopMoving()
+{
+	this->_dx = 0.0f;
+	this->playAnimation(_idleAnimations[_direction]);
+}
+
+void Tank::shoot() 
+{
+	if (_firedBullet != nullptr) 
+	{
+		_firedBullet = this->_gun->shoot(_x, _y, _direction);
+	}
+}
+
+void Tank::update(int elapsedTime)
 {
 	// Move by _dx
 	_x += _dx * elapsedTime;
@@ -49,10 +91,26 @@ void Tank::update(float elapsedTime)
 	// Move by _dy
 	_y += _dy * elapsedTime;
 
+	if (_firedBullet != nullptr) 
+	{
+		if (_firedBullet->checkForCollisions()) 
+		{
+			delete _firedBullet;
+			_firedBullet = nullptr;
+		}
+		else 
+		{
+			_firedBullet->update(elapsedTime);
+		}
+	}
 	AnimatedActor::update(elapsedTime);
 }
 
 void Tank::draw(Canvas &canvas)
 {
+	if (_firedBullet != nullptr)
+	{
+		_firedBullet->draw(canvas);
+	}
 	AnimatedActor::draw(canvas, _x, _y);
 }

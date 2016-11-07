@@ -7,7 +7,11 @@
 
 AnimatedActor::AnimatedActor() {}
 
-AnimatedActor::AnimatedActor(Canvas &canvas, const std::string &filePath, int sourceX, int sourceY, int width, int height, float posX, float posY, float timeToUpdate) : Actor(canvas, filePath, sourceX, sourceY, width, height, posX, posY), _frameIndex(0), _timeToUpdate(timeToUpdate), _visible(true), _currentAnimationOnce(false), _currentAnimation("") {}
+AnimatedActor::AnimatedActor(Canvas &canvas, const std::string &filePath, 
+	int sourceX, int sourceY, int width, int height, 
+	float posX, float posY, float timeToUpdate)
+	: Actor(canvas, filePath, sourceX, sourceY, width, height, posX, posY), 
+	_frameIndex(0), _timeToUpdate(timeToUpdate), _visible(true), _currentAnimationOnce(false), _currentAnimation("") {}
 
 void AnimatedActor::addAnimation(int frames, int x, int y, std::string name, int width, int height, Vector2 offset)
 {

@@ -1,24 +1,18 @@
 #include "Bullet.h"
 
 
-Bullet::Bullet()
+bool checkForCollisions()
 {
+	//TO DO check bullet collisions
+	return false;
 }
 
-//Bullet::Bullet(int x, int y, int damage, BulletType::BType bullet_type) :
-//Actor(x, y), _damage(damage), _bullet_type(bullet_type)
-//{}
-
-Bullet::~Bullet()
-{
-}
-
-void Bullet::update()
+void Bullet::update(int elapsedTime)
 {
 	//TO DO
 }
 
-void Bullet::draw() const
+void Bullet::draw(Canvas &canvas)
 {
 	//TO DO
 }

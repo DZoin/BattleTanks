@@ -1,5 +1,4 @@
-#ifndef ANIMATED_SPRITE_H
-#define ANIMATED_SPRITE_H
+#pragma once
 #include "Actor.h"
 #include "Globals.h"
 #include <string>
@@ -8,7 +7,6 @@
 using namespace std;
 
 class Canvas;
-class Actor;
 
 // Holds logic for animating sprites
 
@@ -60,5 +58,3 @@ private:
 	double _timeElapsed = 0.0;  // Our timer
 	bool _visible;  // Wheter or not the animation is visible
 };
-
-#endif

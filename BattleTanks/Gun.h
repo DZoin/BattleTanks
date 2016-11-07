@@ -5,9 +5,6 @@ class Gun
 {
 public:
 	Gun();
-	Gun(int bullet_damage);
 	virtual ~Gun();
-	virtual Bullet* getBullet(int x, int y) = 0;
-protected:
-	int _bullet_damage;
+	virtual Bullet* shoot(float x, float y, Direction::Value direction) = 0;
 };

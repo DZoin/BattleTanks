@@ -26,9 +26,10 @@ int Game::gameLoop()
 	Canvas canvas("Battle Tanks", 800, 600);
 	Input input;
 	SDL_Event event;
+	SDL_Scancode* keybinds =
+		new SDL_Scancode[] { SDL_SCANCODE_UP, SDL_SCANCODE_DOWN, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_SPACE };
 
-	_tank = Tank(canvas, 100, 100, 4);
-	_tank2 = Tank(canvas, 700, 500, 4);
+	_player = Player(keybinds, Tank(canvas, "Content/Sprites/tank.png", 100, 100, Direction::down));
 
 	int LAST_UPDATE_TIME = SDL_GetTicks();  //SDL_GetTick -> gets the number of milliseconds since the SDL libraly was initialized
 
@@ -38,21 +39,16 @@ int Game::gameLoop()
 
 		if (SDL_PollEvent(&event))
 		{
-			if (event.type == SDL_KEYDOWN)
-			{
-				if (event.key.repeat == 0)  //key.repeat == 0 -> makes sure that you are not holding down a key
-				{
-					input.keyDownEvent(event);
-				}
-			} 
-			else if (event.type == SDL_KEYUP)
-			{
-				input.keyUpEvent(event);
-			}
-			else if (event.type == SDL_QUIT)
+			
+			if (event.type == SDL_QUIT)
 			{
 				return EXIT;
-			} 
+			}
+			else 
+			{
+				_player.evaluateEvent(input, event);
+				_player2.evaluateEvent(input, event);
+			}
 		}
 		if (input.wasKeyPressed(SDL_SCANCODE_ESCAPE) == true)  //if ESC button is pressed, quit the game
 		{
@@ -71,12 +67,11 @@ void Game::draw(Canvas &canvas)
 {
 	canvas.clear();
 
-	_tank.draw(canvas);
-	_tank2.draw(canvas);
+	_player.draw(canvas);
 
 	canvas.flip();
 }
-void Game::update(float elapsedTime)
+void Game::update(int elapsedTime)
 {
 
 }

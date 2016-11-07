@@ -6,17 +6,16 @@ namespace BulletType
 	enum BType {Basic};
 }
 
-class Bullet :
-	public Actor
+class Bullet : public Actor
 {
 public:
 	Bullet();
-	//Bullet(int x, int y, int damage, BulletType::BType);
+	Bullet(float x, float y, Direction::Value direction, BulletType::BType);
 	~Bullet();
-	void update();
-	void draw() const;
+	bool checkForCollisions();
+	void update(int elapsedTime);
+	void draw(Canvas &canvas);
 protected:
-	int _damage;
 	BulletType::BType _bullet_type;
 };
 
