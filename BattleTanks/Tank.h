@@ -5,7 +5,10 @@
 namespace tank_constants
 {
 	const float NORMAL_SPEED = 0.1f;
+	const std::vector <std::string> _idleAnimations = { "IdleUp", "IdleDown", "IdleLeft", "IdleRight" };
+	const std::vector <std::string> _moveAnimations = { "DriveUp", "DriveDown", "DriveLeft", "DriveRight" };
 }
+
 
 class Tank : public AnimatedActor
 {
@@ -30,12 +33,9 @@ protected:
 
 	float _dx, _dy;
 	int _health_points;
-	string* _idleAnimations = new string[] { "IdleUp", "IdleDown", "IdleLeft", "IdleRight" };
-	string* _moveAnimations = new string[] { "DriveUp", "DriveDown", "DriveLeft", "DriveRight" };
 	Direction::Value _direction;
 	Gun* _gun;
 	Bullet* _firedBullet = nullptr;
-	void playAnimation();
 	void playAnimation(const string& animation);
 };
 
