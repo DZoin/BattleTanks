@@ -1,7 +1,7 @@
 #include "Bullet.h"
 
 
-bool checkForCollisions()
+/*bool checkForCollisions()
 {
 	//TO DO check bullet collisions
 	return false;
@@ -15,4 +15,4 @@ void Bullet::update(int elapsedTime)
 void Bullet::draw(Canvas &canvas)
 {
 	//TO DO
-}
+} */
