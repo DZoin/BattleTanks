@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 namespace globals
 {
@@ -6,6 +7,7 @@ namespace globals
 	const int SCREEN_HEIGHT = 600;
 
 	const float ACTOR_SCALE = 2.0f;	
+	const std::vector<SDL_Scancode> keybinds = { SDL_SCANCODE_UP, SDL_SCANCODE_DOWN, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_SPACE };
 }
 
 namespace Direction
