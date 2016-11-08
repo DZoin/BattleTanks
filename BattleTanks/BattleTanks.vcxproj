@@ -82,8 +82,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Zoin\Documents\UNI - Game Dev\battletanks\BattleTanks\SDL2-2.0.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Zoin\Documents\UNI - Game Dev\battletanks\BattleTanks\SDL2-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Uni\BattleTanks\BattleTanks\SDL2-2.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Uni\BattleTanks\BattleTanks\SDL2-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

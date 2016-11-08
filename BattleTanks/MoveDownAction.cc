@@ -3,5 +3,6 @@
 
 void MoveDownAction::execute(Tank& tank)
 {
+	tank.stopMoving();
 	tank.moveDown();
 }

@@ -23,19 +23,19 @@ Player& Player::operator=(const Player &other)
 	return *this;
 }
 
-Player::Player(SDL_Scancode* keybinds, Tank& tank) : _keybinds(keybinds), _tank(tank) 
+Player::Player(std::vector<SDL_Scancode> keybinds, Tank& tank) : _keybinds(keybinds), _tank(tank) 
 {	
 	initializeActionList();
 }
 
 Player::~Player()
 {
-	delete _keybinds;
+	//delete _keybinds;
 }
 
 void Player::initializeActionList()
 {
-	for (int i = 0; i < sizeof(_keybinds) / sizeof(*_keybinds); ++i)
+	for (int i = 0; i < _keybinds.size(); ++i)
 	{
 		switch (i)
 		{
@@ -74,42 +74,36 @@ void Player::switchTank(Tank& tank) {
 
 void Player::evaluateEvent(Input input, SDL_Event event)
 {
-	Action *action = this->isMoving(input);
-	
-	if (action != nullptr) {
-		SDL_Scancode scancode = event.key.keysym.scancode;
-		for (int i = 0; i < sizeof(_keybinds) / sizeof(*_keybinds); ++i)
+	SDL_Scancode scancode = event.key.keysym.scancode;
+	for (int i = 0; i < _keybinds.size(); ++i)
+	{
+		if (_keybinds[i] == scancode)
 		{
-			if (_keybinds[i] == scancode)
+			Action* action = new StopAction();
+			if (event.type == SDL_KEYDOWN)
 			{
-				if (event.type == SDL_KEYDOWN)
-				{
-					if (event.key.repeat == 0)  //key.repeat == 0 -> makes sure that you are not holding down a key
-					{
-						input.keyDownEvent(event);
-					}
+				if (event.key.repeat == 0)
+				{ //key.repeat == 0 -> makes sure that you are not holding down a key
+					input.keyDownEvent(event);
 				}
-				else if (event.type == SDL_KEYUP)
-				{
-					input.keyUpEvent(event);
-				}
-				auto it = std::find(_actionList.begin(), _actionList.end(), scancode);
+				auto it = utils::find(_actionList.begin(), _actionList.end(), scancode);
 				action = it->second;
 			}
-			action = new StopAction();
+			if (event.type == SDL_KEYUP)
+			{
+				input.keyUpEvent(event);
+			}
+			action->execute(_tank);
 		}
 	}
-	action->execute(_tank);
 }
-Action* Player::isMoving(Input input)
+
+void Player::update(int elapsedTime)
 {
-	for (int i = 0; i < 4; ++i)
-	{
-		if (input.isKeyHeld(_keybinds[i]))
-		{
-			auto it = utils::find(_actionList.begin(), _actionList.end(), _keybinds[i]);
-			return it->second;
-		}
-	}
-	return nullptr;
+	_tank.update(elapsedTime);
+}
+
+void Player::draw(Canvas &canvas)
+{
+ 	_tank.draw(canvas);
 }
