@@ -43,6 +43,7 @@ void Tank::animationDone(std::string currentAnimation) {}
 void Tank::moveUp()
 {
 	this->_dy = -tank_constants::NORMAL_SPEED;
+	this->_dx = 0.0f;
 	this->_direction = Direction::up;
 	this->playAnimation(tank_constants::_moveAnimations[_direction]);
 }
@@ -50,6 +51,7 @@ void Tank::moveUp()
 void Tank::moveDown() 
 {
 	this->_dy = tank_constants::NORMAL_SPEED;
+	this->_dx = 0.0f;
 	this->_direction = Direction::down;
 	this->playAnimation(tank_constants::_moveAnimations[_direction]);
 }
@@ -57,6 +59,7 @@ void Tank::moveDown()
 void Tank::moveRight()
 {
 	this->_dx = tank_constants::NORMAL_SPEED;
+	this->_dy = 0.0f;
 	this->_direction = Direction::right;
 	this->playAnimation(tank_constants::_moveAnimations[_direction]);
 	
@@ -65,6 +68,7 @@ void Tank::moveRight()
 void Tank::moveLeft()
 {
 	this->_dx = -tank_constants::NORMAL_SPEED;
+	this->_dy = 0.0f;
 	this->_direction = Direction::left;
 	this->playAnimation(tank_constants::_moveAnimations[_direction]);
 }
