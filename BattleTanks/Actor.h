@@ -1,6 +1,9 @@
 #pragma once
 #include <SDL_image.h>
 #include <string>
+#include "Rectangle.h"
+#include <SDL.h>
+
 #include "Globals.h"
 class Canvas;
 class Actor;
@@ -14,9 +17,14 @@ public:
 	virtual void update();
 	void draw(Canvas &canvas, int x, int y);
 
+	const Rectangle getBoundingBox() const;
+	const sides::Side getcollisionSide(Rectangle &other) const;
+
 protected:
 	SDL_Rect _sourceRect;
 	SDL_Texture* _spriteSheet;
+
+	Rectangle _boundingBox;
 
 	float _x, _y;
 };

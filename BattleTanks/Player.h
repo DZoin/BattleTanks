@@ -27,9 +27,25 @@ public:
 	Player(const std::vector<SDL_Scancode>&, Tank& tank);
 	~Player();
 
+	//Added by Ilko when splicing
+	void toPrev();
+
+	//Added by Ilko when splicign start
+	void handleTileCollisions(std::vector<Rectangle> &others);
+
+	const Rectangle Player::getBoundingBox() const;
+
+	const float getX() const;
+	const float getY() const;
+	//Added by Ilko when splicign end
+
 	Player& operator=(const Player &other);
 	void switchTank(Tank& tank);
 	void draw(Canvas &canvas);
 	void update(int elapsedTime);
 	void evaluateEvent(Input &input, SDL_Event event);
+
+protected:
+	//Added by Ilko when splicing
+	float prevX, prevY;
 };

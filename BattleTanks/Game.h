@@ -1,6 +1,7 @@
 #pragma once
 #include "Canvas.h"
 #include "Player.h"
+#include "Level.h"
 #define EXIT -1
 class Game
 {
@@ -14,4 +15,6 @@ private:
 
 	Player _player;
 	Player _player2;
+
+	Level _level;
 };

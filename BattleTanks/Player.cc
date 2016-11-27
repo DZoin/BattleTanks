@@ -111,10 +111,25 @@ void Player::evaluateEvent(Input &input, SDL_Event event)
 
 void Player::update(int elapsedTime)
 {
+	//Added by Ilko when splicing start
+	prevX = _x;
+	prevY = _y;
+	//end
+
 	_tank.update(elapsedTime);
 }
 
 void Player::draw(Canvas &canvas)
 {
  	_tank.draw(canvas);
+}
+
+void Player::toPrev()
+{
+	_tank.toPrev();
+}
+
+const Rectangle Player::getBoundingBox() const
+{
+	return _tank.getBoundingBox();
 }

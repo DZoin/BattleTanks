@@ -40,6 +40,20 @@ void Tank::setUpAnimations()
 
 void Tank::animationDone(std::string currentAnimation) {}
 
+//Added by Ilko when splicing start
+
+const float Tank::getX() const
+{
+	return _x;
+}
+
+const float Tank::getY() const
+{
+	return _y;
+}
+//Added by Ilko when splicing end
+
+
 void Tank::moveUp()
 {
 	this->_dy = -tank_constants::NORMAL_SPEED;
@@ -90,6 +104,11 @@ void Tank::shoot()
 
 void Tank::update(int elapsedTime)
 {
+	//Added by Ilko when splicing start
+	prevX = _x;
+	prevY = _y;
+	//end
+
 	// Move by _dx
 	_x += _dx * elapsedTime;
 
@@ -118,4 +137,10 @@ void Tank::draw(Canvas &canvas)
 		_firedBullet->draw(canvas);
 	}*/
 	AnimatedActor::draw(canvas, _x, _y);
+}
+
+void Tank::toPrev()
+{
+	_x = prevX;
+	_y = prevY;
 }

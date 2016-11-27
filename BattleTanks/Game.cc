@@ -16,6 +16,8 @@ namespace
 Game::Game()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
+	//Added by Ilko while splicing
+	gameLoop();
 }
 Game::~Game()
 {
@@ -29,9 +31,11 @@ int Game::gameLoop()
 	
 
 	
-	_player = Player(globals::keybinds, Tank(canvas, "Content/Sprites/tank.png", 100, 100, Direction::down));
+	_player = Player(globals::keybinds, Tank(canvas, "Content/Sprites/tank.png",50,50, Direction::down));
 	_player2 = Player(globals::player_2_keybinds, Tank(canvas, "Content/Sprites/tank.png", 700, 500, Direction::up));
 
+	_level = Level("Map1", Vector2(100, 100), canvas);
+	
 	int LAST_UPDATE_TIME = SDL_GetTicks();  //SDL_GetTick -> gets the number of milliseconds since the SDL libraly was initialized
 
 	while (true)
@@ -67,6 +71,7 @@ int Game::gameLoop()
 void Game::draw(Canvas &canvas)
 {
 	canvas.clear();
+	_level.draw(canvas);
 
 	_player.draw(canvas);
 	_player2.draw(canvas);
@@ -77,4 +82,14 @@ void Game::update(int elapsedTime)
 {
 	this->_player.update(elapsedTime);
 	this->_player2.update(elapsedTime);
+	_level.update(elapsedTime);
+
+	// Check collisions
+	std::vector<Rectangle> others;
+	if ((others = _level.checkTileCollision(_player.getBoundingBox())).size() > 0)
+	{
+		// Player collided with at least one tile. Handle it
+		//-- _player.handleTileCollisions(others);
+		_player.toPrev();
+	}
 }
