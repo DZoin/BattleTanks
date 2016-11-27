@@ -1,8 +1,9 @@
 #pragma once
 #include <SDL_image.h>
 #include <string>
-
+#include "Globals.h"
 class Canvas;
+class Actor;
 
 class Actor
 {
@@ -12,7 +13,6 @@ public:
 	virtual ~Actor();
 	virtual void update();
 	void draw(Canvas &canvas, int x, int y);
-
 
 protected:
 	SDL_Rect _sourceRect;

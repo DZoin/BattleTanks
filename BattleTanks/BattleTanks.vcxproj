@@ -18,13 +18,20 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Game.cc" />
     <ClCompile Include="Canvas.cc" />
-    <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Input.cc" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MoveDownAction.cc" />
+    <ClCompile Include="MoveLeftAction.cc" />
+    <ClCompile Include="MoveRight.cc" />
+    <ClCompile Include="MoveUpAction.cc" />
+    <ClCompile Include="Player.cc" />
+    <ClCompile Include="ShootAction.cc" />
+    <ClCompile Include="StopAction.cc" />
     <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Action.h" />
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimatedActor.h" />
     <ClInclude Include="BasicGun.h" />
@@ -35,8 +42,16 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="MoveDownAction.h" />
+    <ClInclude Include="MoveLeftAction.h" />
+    <ClInclude Include="MoveRightAction.h" />
+    <ClInclude Include="MoveUpAction.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="ShootAction.h" />
+    <ClInclude Include="StopAction.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B25CEBB7-E14A-4208-9CA2-52A1965EBBC1}</ProjectGuid>

@@ -1,15 +1,6 @@
 #include "BasicGun.h"
 
-
-BasicGun::BasicGun()
+Bullet* BasicGun::shoot(float x, float y, Direction::Value direction)
 {
-}
-
-BasicGun::~BasicGun()
-{
-}
-
-Bullet* BasicGun::getBullet(int x, int y)
-{
-	return nullptr;// new Bullet(x, y, _bullet_damage, BulletType::Basic);
+	return nullptr;// new Bullet(x, y, direction, BulletType::Basic);
 }

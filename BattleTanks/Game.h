@@ -1,6 +1,6 @@
 #pragma once
-#include "Tank.h"
 #include "Canvas.h"
+#include "Player.h"
 #define EXIT -1
 class Game
 {
@@ -10,8 +10,8 @@ public:
 	int gameLoop();
 private:
 	void draw(Canvas &graphics);
-	void update(float elapsedTime);
+	void update(int elapsedTime);
 
-	Tank _tank;
-	Tank _tank2;
+	Player _player;
+	Player _player2;
 };
