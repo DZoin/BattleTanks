@@ -23,14 +23,14 @@ Player& Player::operator=(const Player &other)
 	return *this;
 }
 
-Player::Player(std::vector<SDL_Scancode> keybinds, Tank& tank) : _keybinds(keybinds), _tank(tank) 
+Player::Player(const std::vector<SDL_Scancode> &keybinds, Tank& tank) : _keybinds(keybinds), _tank(tank) 
 {	
 	initializeActionList();
 }
 
 Player::~Player()
 {
-	//delete _keybinds;
+	
 }
 
 void Player::initializeActionList()
@@ -72,31 +72,42 @@ void Player::switchTank(Tank& tank) {
 	this->_tank = tank;
 }
 
-void Player::evaluateEvent(Input input, SDL_Event event)
+void Player::evaluateEvent(Input &input, SDL_Event event)
 {
 	SDL_Scancode scancode = event.key.keysym.scancode;
 	for (int i = 0; i < _keybinds.size(); ++i)
 	{
 		if (_keybinds[i] == scancode)
 		{
-			Action* action = new StopAction();
+			Action* action;
 			if (event.type == SDL_KEYDOWN)
 			{
 				if (event.key.repeat == 0)
 				{ //key.repeat == 0 -> makes sure that you are not holding down a key
 					input.keyDownEvent(event);
 				}
-				auto it = utils::find(_actionList.begin(), _actionList.end(), scancode);
-				action = it->second;
-			}
-			if (event.type == SDL_KEYUP)
+			
+			} else if (event.type == SDL_KEYUP)
 			{
 				input.keyUpEvent(event);
 			}
-			action->execute(_tank);
+
+			if (input.isKeyHeld(scancode))
+			{
+				auto it = utils::find(_actionList.begin(), _actionList.end(), scancode);
+				action = it->second;
+				action->execute(_tank);
+			}
+			else if (!input.hasPressedKeys(_keybinds))
+			{
+				action = new StopAction();
+				action->execute(_tank);
+			}
+			
+			break;
 		}
 	}
-}
+ }
 
 void Player::update(int elapsedTime)
 {

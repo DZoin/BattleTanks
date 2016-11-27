@@ -33,6 +33,20 @@ bool Input::wasKeyPressed(SDL_Scancode key)
 	return _pressedKeys[key];
 }
 
+bool Input::hasPressedKeys(const std::vector<SDL_Scancode> &keybinds)
+{
+	bool hasPressedKey = false;
+	for (auto keybind : keybinds)
+	{
+		if (isKeyHeld(keybind))
+		{
+			hasPressedKey = true;
+			break;
+		}
+	}
+	return hasPressedKey;
+}
+
 // Checks if a certain key was released during the current frame
 bool Input::wasKeyReleased(SDL_Scancode key)
 {

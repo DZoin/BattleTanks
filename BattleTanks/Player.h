@@ -20,17 +20,16 @@ private:
 	std::vector<SDL_Scancode> _keybinds;
 	Tank _tank;	
 	std::list<std::pair<SDL_Scancode, Action*>> _actionList;
-
 	void initializeActionList();
 public:
 	Player();
 	Player(const Player& other);
-	Player(std::vector<SDL_Scancode>, Tank& tank);
+	Player(const std::vector<SDL_Scancode>&, Tank& tank);
 	~Player();
 
 	Player& operator=(const Player &other);
 	void switchTank(Tank& tank);
 	void draw(Canvas &canvas);
 	void update(int elapsedTime);
-	void evaluateEvent(Input input, SDL_Event event);
+	void evaluateEvent(Input &input, SDL_Event event);
 };
