@@ -30,6 +30,7 @@ int Game::gameLoop()
 
 	
 	_player = Player(globals::keybinds, Tank(canvas, "Content/Sprites/tank.png", 100, 100, Direction::down));
+	_player2 = Player(globals::player_2_keybinds, Tank(canvas, "Content/Sprites/tank.png", 700, 500, Direction::up));
 
 	int LAST_UPDATE_TIME = SDL_GetTicks();  //SDL_GetTick -> gets the number of milliseconds since the SDL libraly was initialized
 
@@ -47,7 +48,7 @@ int Game::gameLoop()
 			else 
 			{
 				_player.evaluateEvent(input, event);
-			//	_player2.evaluateEvent(input, event);
+				_player2.evaluateEvent(input, event);
 			}
 		}
 		if (input.wasKeyPressed(SDL_SCANCODE_ESCAPE) == true)  //if ESC button is pressed, quit the game
@@ -68,10 +69,12 @@ void Game::draw(Canvas &canvas)
 	canvas.clear();
 
 	_player.draw(canvas);
+	_player2.draw(canvas);
 
 	canvas.flip();
 }
 void Game::update(int elapsedTime)
 {
 	this->_player.update(elapsedTime);
+	this->_player2.update(elapsedTime);
 }
