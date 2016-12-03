@@ -11,18 +11,6 @@ Player::Player(const Player& other) : _keybinds(other._keybinds), _tank(other._t
 
 }
 
-Player& Player::operator=(const Player &other)
-{
-	this->_actionList = other._actionList;
-	this->_keybinds = other._keybinds;
-	this->_sourceRect = other._sourceRect;
-	this->_spriteSheet = other._spriteSheet;
-	this->_tank = other._tank;
-	this->_x = other._x;
-	this->_y = other._y;
-	return *this;
-}
-
 Player::Player(const std::vector<SDL_Scancode> &keybinds, Tank& tank) : _keybinds(keybinds), _tank(tank) 
 {	
 	initializeActionList();
@@ -109,27 +97,12 @@ void Player::evaluateEvent(Input &input, SDL_Event event)
 	}
  }
 
-void Player::update(int elapsedTime)
+void Player::update(Level &level, int elapsedTime)
 {
-	//Added by Ilko when splicing start
-	prevX = _x;
-	prevY = _y;
-	//end
-
-	_tank.update(elapsedTime);
+	_tank.update(level, elapsedTime);
 }
 
 void Player::draw(Canvas &canvas)
 {
  	_tank.draw(canvas);
-}
-
-void Player::toPrev()
-{
-	_tank.toPrev();
-}
-
-const Rectangle Player::getBoundingBox() const
-{
-	return _tank.getBoundingBox();
 }

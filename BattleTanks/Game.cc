@@ -80,16 +80,7 @@ void Game::draw(Canvas &canvas)
 }
 void Game::update(int elapsedTime)
 {
-	this->_player.update(elapsedTime);
-	this->_player2.update(elapsedTime);
+	this->_player.update(_level, elapsedTime);
+	this->_player2.update(_level, elapsedTime);
 	_level.update(elapsedTime);
-
-	// Check collisions
-	std::vector<Rectangle> others;
-	if ((others = _level.checkTileCollision(_player.getBoundingBox())).size() > 0)
-	{
-		// Player collided with at least one tile. Handle it
-		//-- _player.handleTileCollisions(others);
-		_player.toPrev();
-	}
 }

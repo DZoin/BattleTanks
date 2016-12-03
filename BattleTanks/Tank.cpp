@@ -102,45 +102,47 @@ void Tank::shoot()
 	}
 }
 
-void Tank::update(int elapsedTime)
+void Tank::update(Level &level, int elapsedTime)
 {
-	//Added by Ilko when splicing start
-	prevX = _x;
-	prevY = _y;
-	//end
-
-	// Move by _dx
-	_x += _dx * elapsedTime;
-
-	// Move by _dy
-	_y += _dy * elapsedTime;
-
-	/*if (_firedBullet != nullptr)
+	std::vector<Rectangle> collisionRects = level.checkTileCollision(getBoundingBox());
+	if (collisionRects.size() > 0)
 	{
-		if (_firedBullet->checkForCollisions()) 
+		handleTileCollisions(collisionRects);
+	}
+	else
+	{
+		_prevX = _x;
+		_prevY = _y;
+		// Move by _dx
+		_x += _dx * elapsedTime;
+		// Move by _dy
+		_y += _dy * elapsedTime;
+	}
+
+
+	if (_firedBullet != nullptr)
+	{
+		_firedBullet->update(level, elapsedTime);
+		if (_firedBullet->hasExploded())
 		{
 			delete _firedBullet;
 			_firedBullet = nullptr;
 		}
-		else 
-		{
-			_firedBullet->update(elapsedTime);
-		}
-	}*/
+	}
 	AnimatedActor::update(elapsedTime);
+}
+
+void Tank::handleTileCollisions(std::vector<Rectangle> &collisionRects)
+{
+	_x = _prevX;
+	_y = _prevY;
 }
 
 void Tank::draw(Canvas &canvas)
 {
-	/*if (_firedBullet != nullptr)
+	if (_firedBullet != nullptr)
 	{
 		_firedBullet->draw(canvas);
-	}*/
+	}
 	AnimatedActor::draw(canvas, _x, _y);
-}
-
-void Tank::toPrev()
-{
-	_x = prevX;
-	_y = prevY;
 }
