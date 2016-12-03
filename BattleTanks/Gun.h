@@ -4,5 +4,5 @@
 class Gun
 {
 public:
-	virtual Bullet* shoot(float x, float y, Direction::Value direction) = 0;
+	virtual Bullet* shoot(Direction::Value direction, Canvas &canvas, float x, float y) = 0;
 };

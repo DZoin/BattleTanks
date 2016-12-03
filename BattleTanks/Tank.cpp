@@ -40,19 +40,6 @@ void Tank::setUpAnimations()
 
 void Tank::animationDone(std::string currentAnimation) {}
 
-//Added by Ilko when splicing start
-
-const float Tank::getX() const
-{
-	return _x;
-}
-
-const float Tank::getY() const
-{
-	return _y;
-}
-//Added by Ilko when splicing end
-
 
 void Tank::moveUp()
 {
@@ -96,9 +83,9 @@ void Tank::stopMoving()
 
 void Tank::shoot() 
 {
-	if (_firedBullet != nullptr) 
+	if (_firedBullet == nullptr) 
 	{
-		_firedBullet = this->_gun->shoot(_x, _y, _direction);
+		shouldShootBullet = true;
 	}
 }
 
@@ -140,6 +127,11 @@ void Tank::handleTileCollisions(std::vector<Rectangle> &collisionRects)
 
 void Tank::draw(Canvas &canvas)
 {
+	if (shouldShootBullet)
+	{
+		_firedBullet = _gun->shoot(_direction, canvas, _x, _y);
+		shouldShootBullet = false;
+	}
 	if (_firedBullet != nullptr)
 	{
 		_firedBullet->draw(canvas);

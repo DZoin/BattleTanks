@@ -13,6 +13,8 @@ namespace tank_constants
 
 class Tank : public AnimatedActor
 {
+private:
+	bool shouldShootBullet = false;
 public:
 	Tank();
 	Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, Direction::Value direction);
