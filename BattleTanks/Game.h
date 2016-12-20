@@ -12,6 +12,7 @@ public:
 private:
 	void draw(Canvas &graphics);
 	void update(int elapsedTime);
+	void playMusic();
 
 	Player _player;
 	Player _player2;

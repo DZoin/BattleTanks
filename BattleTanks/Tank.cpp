@@ -2,6 +2,7 @@
 #include "Canvas.h"
 #include "BasicGun.h"
 #include "AnimatedActor.h"
+#include <SDL_mixer.h>
 
 Tank::Tank(){}
 
@@ -16,6 +17,84 @@ Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* g
 
 	setUpAnimations();
 	stopMoving();
+}
+
+void Tank::playShootingSFX()
+{
+	
+	// open 44.1KHz, signed 16bit, system byte order,
+	//      stereo audio, using 1024 byte chunks
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+		printf("Mix_OpenAudio: %s\n", Mix_GetError());
+		exit(2);
+	}
+
+	//End of initialization
+
+	//Declaring and loading a wav file, used for movements and actions
+	// load sample.wav in to sample
+	Mix_Chunk *sample;
+	sample = Mix_LoadWAV("Content/SondFX(WAVs)/shootingFX.wav");
+	if (!sample) {
+		printf("Mix_LoadWAV: %s\n", Mix_GetError());
+		// handle error
+	}
+
+	//End of WAV loading
+
+	// set channel 1 to half volume
+	Mix_Volume(2, MIX_MAX_VOLUME / 6);
+
+	// print the average volume
+	printf("1st channel volume is %d\n", Mix_Volume(2, -1));
+
+	// play sample on first free unreserved channel
+	// play it exactly once through
+	// Mix_Chunk *sample; //previously loaded
+	if (Mix_PlayChannel(2, sample, 0) == -1) {
+		printf("Mix_PlayChannel: %s\n", Mix_GetError());
+		// may be critical error, or maybe just no channels were free.
+		// you could allocated another channel in that case...S
+	}
+}
+
+void Tank::playMovementSFX()
+{
+
+	// open 44.1KHz, signed 16bit, system byte order,
+	//      stereo audio, using 1024 byte chunks
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+		printf("Mix_OpenAudio: %s\n", Mix_GetError());
+		exit(2);
+	}
+
+	//End of initialization
+
+	//Declaring and loading a wav file, used for movements and actions
+	// load sample.wav in to sample
+	Mix_Chunk *sample;
+	sample = Mix_LoadWAV("Content/SondFX(WAVs)/movementFX.wav");
+	if (!sample) {
+		printf("Mix_LoadWAV: %s\n", Mix_GetError());
+		// handle error
+	}
+
+	//End of WAV loading
+
+	// set channel 1 to half volume
+	Mix_Volume(2, MIX_MAX_VOLUME / 6);
+
+	// print the average volume
+	printf("1st channel volume is %d\n", Mix_Volume(2, -1));
+
+	// play sample on first free unreserved channel
+	// play it exactly once through
+	// Mix_Chunk *sample; //previously loaded
+	if (Mix_PlayChannel(2, sample, 0) == -1) {
+		printf("Mix_PlayChannel: %s\n", Mix_GetError());
+		// may be critical error, or maybe just no channels were free.
+		// you could allocated another channel in that case...S
+	}
 }
 
 void Tank::playAnimation(const string& animation)
@@ -60,6 +139,7 @@ void Tank::moveUp()
 	this->_dx = 0.0f;
 	this->_direction = Direction::up;
 	this->playAnimation(tank_constants::_moveAnimations[_direction]);
+	this->playMovementSFX();
 }
 
 void Tank::moveDown() 
@@ -68,6 +148,7 @@ void Tank::moveDown()
 	this->_dx = 0.0f;
 	this->_direction = Direction::down;
 	this->playAnimation(tank_constants::_moveAnimations[_direction]);
+	this->playMovementSFX();
 }
 
 void Tank::moveRight()
@@ -76,7 +157,7 @@ void Tank::moveRight()
 	this->_dy = 0.0f;
 	this->_direction = Direction::right;
 	this->playAnimation(tank_constants::_moveAnimations[_direction]);
-	
+	this->playMovementSFX();
 }
 
 void Tank::moveLeft()
@@ -85,6 +166,7 @@ void Tank::moveLeft()
 	this->_dy = 0.0f;
 	this->_direction = Direction::left;
 	this->playAnimation(tank_constants::_moveAnimations[_direction]);
+	this->playMovementSFX();
 }
 
 void Tank::stopMoving()
@@ -92,6 +174,8 @@ void Tank::stopMoving()
 	this->_dx = 0.0f;
 	this->_dy = 0.0f;
 	this->playAnimation(tank_constants::_idleAnimations[_direction]);
+	// pause all sample playback
+	Mix_Pause(2);
 }
 
 void Tank::shoot() 
@@ -101,6 +185,7 @@ void Tank::shoot()
 		_firedBullet = this->_gun->shoot(_x, _y, _direction);
 	}
 }
+
 
 void Tank::update(int elapsedTime)
 {

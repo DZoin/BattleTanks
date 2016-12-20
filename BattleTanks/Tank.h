@@ -27,6 +27,8 @@ public:
 	void moveDown();
 	void stopMoving();
 	void shoot();
+	void playMovementSFX();
+	void playShootingSFX();
 
 	virtual void animationDone(std::string currentAnimation);
 	virtual void setUpAnimations();
