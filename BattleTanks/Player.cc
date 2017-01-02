@@ -11,7 +11,7 @@ Player::Player(const Player& other) : _keybinds(other._keybinds), _tank(other._t
 
 }
 
-Player::Player(const std::vector<SDL_Scancode> &keybinds, Tank& tank) : _keybinds(keybinds), _tank(tank) 
+Player::Player(const std::vector<SDL_Scancode> &keybinds, Tank& tank) : _keybinds(keybinds), _tank(tank), _maxHealthPlayer1(100), _currentHealthPlayer1(50), _maxHealthPlayer2(100), _currentHealthPlayer2(20)
 {	
 	initializeActionList();
 }

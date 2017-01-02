@@ -67,3 +67,14 @@ const sides::Side Actor::getCollisionSide(Rectangle &other) const
 		sides::NONE;
 }
 
+void Actor::setSourceRectW(int value)
+{
+	_sourceRect.w = value;
+}
+
+void Actor::setSourceRectH(int value)
+{
+	_sourceRect.h = value;
+}
+
+

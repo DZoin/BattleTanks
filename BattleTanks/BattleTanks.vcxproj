@@ -18,6 +18,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Game.cc" />
     <ClCompile Include="Canvas.cc" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Input.cc" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MoveDownAction.h" />
@@ -98,7 +100,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>

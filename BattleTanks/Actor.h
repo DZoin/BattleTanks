@@ -21,7 +21,15 @@ public:
 
 	const Rectangle getBoundingBox() const;
 	const sides::Side getCollisionSide(Rectangle &other) const;
-	virtual void handleTileCollisions(std::vector<Rectangle> &collisionRects) = 0;
+	//virtual void handleTileCollisions(std::vector<Rectangle> &collisionRects) = 0;
+
+	const inline float getX() const { return _x; }
+	const inline float getY() const { return _y; }
+
+	void setSourceRectW(int value);
+	void setSourceRectH(int value);
+
+
 protected:
 	SDL_Rect _sourceRect;
 	SDL_Texture* _spriteSheet;
