@@ -10,6 +10,8 @@ Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Direct
 Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, Direction::Value direction) : AnimatedActor(canvas, filePath, 0, 0, 16, 16, x, y, 100)
 {
 	canvas.loadImage(filePath);
+	_prevX = x;
+	_prevY = y;
 
 	this->_direction = direction;
 	this->_gun = gun;
@@ -91,7 +93,7 @@ void Tank::shoot()
 
 void Tank::update(Level &level, int elapsedTime)
 {
-	std::vector<Rectangle> collisionRects = level.checkTileCollision(getBoundingBox());
+	std::vector<Actor*> collisionRects = level.checkTileCollision(getBoundingBox());
 	if (collisionRects.size() > 0)
 	{
 		handleTileCollisions(collisionRects);
@@ -119,7 +121,7 @@ void Tank::update(Level &level, int elapsedTime)
 	AnimatedActor::update(elapsedTime);
 }
 
-void Tank::handleTileCollisions(std::vector<Rectangle> &collisionRects)
+void Tank::handleTileCollisions(std::vector<Actor*> &collisionRects)
 {
 	_x = _prevX;
 	_y = _prevY;

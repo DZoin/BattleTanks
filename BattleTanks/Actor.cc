@@ -30,6 +30,11 @@ void Actor::draw(Canvas &canvas, int x, int y)
 	canvas.blitSurface(_spriteSheet, &_sourceRect, &destinationRectangle);
 }
 
+void Actor::draw(Canvas &canvas)
+{
+	draw(canvas, _x, _y);
+}
+
 void Actor::update() 
 {
 	_boundingBox = Rectangle(_x, _y, _sourceRect.w * (globals::ACTOR_SCALE), _sourceRect.h * (globals::ACTOR_SCALE));

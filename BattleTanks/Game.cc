@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include "Game.h"
 #include "Input.h"
+#include "GlobalActors.h"
 #include <algorithm>
 #include <string>
 using namespace std;
@@ -30,11 +31,17 @@ int Game::gameLoop()
 	SDL_Event event;
 	
 
+	auto tank = Tank(canvas, "Content/Sprites/tank.png", 50, 50, Direction::down);
+	auto tank2 = Tank(canvas, "Content/Sprites/tank.png", 700, 500, Direction::up);
+	_player = Player(globals::keybinds, tank);
+	_player2 = Player(globals::player_2_keybinds, tank2);
+	//globals::gameObjects = new vector<Actor*>();
 	
-	_player = Player(globals::keybinds, Tank(canvas, "Content/Sprites/tank.png",50,50, Direction::down));
-	_player2 = Player(globals::player_2_keybinds, Tank(canvas, "Content/Sprites/tank.png", 700, 500, Direction::up));
+	//globals::gameObjects->push_back(&tank);
+	//globals::gameObjects->push_back(&tank2);
 
 	_level = Level("Map1", Vector2(100, 100), canvas);
+	_level.loadMap("Map1", canvas);
 	
 	int LAST_UPDATE_TIME = SDL_GetTicks();  //SDL_GetTick -> gets the number of milliseconds since the SDL libraly was initialized
 
@@ -67,6 +74,7 @@ int Game::gameLoop()
 		LAST_UPDATE_TIME = CURRENT_TIME_MS;  //Start the initialization again, before the loop begins a new cicle
 		draw(canvas);
 	}
+	//delete globals::gameObjects;
 }
 void Game::draw(Canvas &canvas)
 {

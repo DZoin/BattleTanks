@@ -25,7 +25,7 @@ public:
 	~Bullet();
 	void update(Level &level, int elapsedTime);
 	void draw(Canvas &canvas);
-	void handleTileCollisions(std::vector<Rectangle> &collisionRects);
+	void handleTileCollisions(std::vector<Actor*> &collisionRects);
 	bool hasExploded();	
 };
 

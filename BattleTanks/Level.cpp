@@ -13,7 +13,6 @@ Level::Level() {}
 
 Level::Level(std::string mapName, Vector2 spawnPoint, Canvas &canvas) : _mapName(mapName), _spawnPoint(spawnPoint), _size(Vector2(0,0))
 {
-	loadMap(mapName, canvas);
 }
 
 Level::~Level() {}
@@ -53,7 +52,7 @@ void Level::loadMap(std::string mapName, Canvas &canvas)
 			ss << source;
 			pTileset->QueryIntAttribute("firstgid", &firstGid);
 			SDL_Texture* tex = SDL_CreateTextureFromSurface(canvas.getRenderer(), canvas.loadImage(ss.str()));
-			_tilesets.push_back(Tileset(tex, firstGid));
+			_tilesets.push_back(Tileset(tex, ss.str(), firstGid));
 			pTileset = pTileset->NextSiblingElement("tileset");
 		}
 	}
@@ -123,22 +122,22 @@ void Level::loadMap(std::string mapName, Canvas &canvas)
 						int xx = 0;
 						int yy = 0;
 						xx = tileCounter % width;
-						xx *= tileWidth;
-						yy += tileHeight * (tileCounter / width);
-						Vector2 finalTilePosition = Vector2(xx, yy);
+						xx *= tileWidth * globals::ACTOR_SCALE;
+
+						yy += tileHeight * (tileCounter / width) * globals::ACTOR_SCALE;
 
 						//Calculate the position of the tile in the tileset
 						int tilesetWidth, tilesetHegiht;
 						SDL_QueryTexture(tls._texture, NULL, NULL, &tilesetWidth, &tilesetHegiht);
+						int amnt = (gid / (tilesetWidth / tileWidth));
+
 						int tsxx = gid % (tilesetWidth / tileWidth) - 1;
 						tsxx *= tileWidth;
 						int tsyy = 0;
-						int amnt = (gid / (tilesetWidth / tileWidth));
 						tsyy = tileHeight * amnt;
-						Vector2 finalTilesetPosition = Vector2(tsxx, tsyy);
 
 						// Build the actual tile and add it to the evel's tile list
-						Tile tile(tls._texture, Vector2(tileWidth, tileHeight), finalTilesetPosition, finalTilePosition);
+						Tile tile(canvas, tls._filePath, tsxx, tsyy, tileWidth, tileHeight, xx, yy);
 						_tileList.push_back(tile);
 						tileCounter++;
 
@@ -153,44 +152,44 @@ void Level::loadMap(std::string mapName, Canvas &canvas)
 		}
 	}
 
-	// Parse out the collisions
-	XMLElement* pObjectGroup = mapNode->FirstChildElement("objectgroup");
-	if (pObjectGroup != NULL)
-	{
-		while (pObjectGroup)
-		{
-			const char* name = pObjectGroup->Attribute("name");
-			std::stringstream ss;
-			ss << name;
-			if (ss.str() == "Collisions")
-			{
-				XMLElement* pObject = pObjectGroup->FirstChildElement("object");
-				if (pObject != NULL)
-				{
-					while (pObject)
-					{
-						float x, y, width, height;
-						x = pObject->FloatAttribute("x");
-						y = pObject->FloatAttribute("y");
-						width = pObject->FloatAttribute("width");
-						height = pObject->FloatAttribute("height");
-						_collisionRects.push_back(Rectangle(
-							std::ceil(x) * globals::ACTOR_SCALE,
-							std::ceil(y) * globals::ACTOR_SCALE,
-							std::ceil(width) * globals::ACTOR_SCALE,
-							std::ceil(height) * globals::ACTOR_SCALE
-							));
+	//// Parse out the collisions
+	//XMLElement* pObjectGroup = mapNode->FirstChildElement("objectgroup");
+	//if (pObjectGroup != NULL)
+	//{
+	//	while (pObjectGroup)
+	//	{
+	//		const char* name = pObjectGroup->Attribute("name");
+	//		std::stringstream ss;
+	//		ss << name;
+	//		if (ss.str() == "Collisions")
+	//		{
+	//			XMLElement* pObject = pObjectGroup->FirstChildElement("object");
+	//			if (pObject != NULL)
+	//			{
+	//				while (pObject)
+	//				{
+	//					float x, y, width, height;
+	//					x = pObject->FloatAttribute("x");
+	//					y = pObject->FloatAttribute("y");
+	//					width = pObject->FloatAttribute("width");
+	//					height = pObject->FloatAttribute("height");
+	//					_collisionRects.push_back(Rectangle(
+	//						std::ceil(x) * globals::ACTOR_SCALE,
+	//						std::ceil(y) * globals::ACTOR_SCALE,
+	//						std::ceil(width) * globals::ACTOR_SCALE,
+	//						std::ceil(height) * globals::ACTOR_SCALE
+	//						));
 
-						pObject = pObject->NextSiblingElement("object");
-					}
-				}
-			}
-			// Other objectgroups go here with an else if(ss.str() == "whatever")
+	//					pObject = pObject->NextSiblingElement("object");
+	//				}
+	//			}
+	//		}
+	//		// Other objectgroups go here with an else if(ss.str() == "whatever")
 
 
-			pObjectGroup = pObjectGroup->NextSiblingElement("objectgroup");
-		}
-	}
+	//		pObjectGroup = pObjectGroup->NextSiblingElement("objectgroup");
+	//	}
+	//}
 }
 
 void Level::update(int elapsedTime)
@@ -206,14 +205,14 @@ void Level::draw(Canvas &canvas)
 	}
 }
 
-std::vector<Rectangle> Level::checkTileCollision(const Rectangle &other)
+std::vector<Actor*> Level::checkTileCollision(const Rectangle &other)
 {
-	std::vector<Rectangle> others;
-	for (int i = 0; i < _collisionRects.size(); i++)
+	std::vector<Actor*> others;
+	for (int i = 0; i < _tileList.size(); i++)
 	{
-		if (_collisionRects.at(i).collidesWith(other))
+		if (_tileList.at(i).getBoundingBox().collidesWith(other))
 		{
-			others.push_back(_collisionRects.at(i));
+			others.push_back(&(_tileList.at(i)));
 		}
 	}
 	return others;

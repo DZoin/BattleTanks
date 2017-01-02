@@ -59,7 +59,7 @@ public:
 	}
 
 	// Takes in another Rectangle and checks if they are colliding
-	const bool collidesWith(const Rectangle &other)
+	const bool collidesWith(const Rectangle &other) const
 	{
 	 return (getRight() > other.getLeft() && getLeft() < other.getRight() ) 
 			&& (getTop() < other.getBottom() && getBottom() > other.getTop());

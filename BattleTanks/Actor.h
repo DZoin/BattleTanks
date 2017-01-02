@@ -18,10 +18,11 @@ public:
 	virtual ~Actor();
 	virtual void update();
 	void draw(Canvas &canvas, int x, int y);
+	void draw(Canvas &canvas);
 
-	const Rectangle getBoundingBox() const;
+	virtual const Rectangle getBoundingBox() const;
 	const sides::Side getCollisionSide(Rectangle &other) const;
-	virtual void handleTileCollisions(std::vector<Rectangle> &collisionRects) = 0;
+	virtual void handleTileCollisions(std::vector<Actor*> &collisionRects) = 0;
 protected:
 	SDL_Rect _sourceRect;
 	SDL_Texture* _spriteSheet;

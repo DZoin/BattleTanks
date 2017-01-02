@@ -31,7 +31,7 @@ public:
 
 	virtual void animationDone(std::string currentAnimation);
 	virtual void setUpAnimations();
-	void handleTileCollisions(std::vector<Rectangle> &collisionRects);
+	void handleTileCollisions(std::vector<Actor*> &collisionRects);
 protected:
 
 	float _dx, _dy;

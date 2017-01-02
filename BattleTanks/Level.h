@@ -5,6 +5,7 @@
 #include "Tile.h"
 #include "Rectangle.h"
 #include <vector>
+#include <string>
 
 class Canvas;
 struct SDL_Texture;
@@ -20,7 +21,10 @@ public:
 	void update(int elapsedTime);
 	void draw(Canvas &canvas);
 
-	std::vector<Rectangle> checkTileCollision(const Rectangle &other);
+	std::vector<Actor*> checkTileCollision(const Rectangle &other);
+
+	// Loads a map
+	void loadMap(std::string mapName, Canvas &canvas);
 
 private:
 	std::string _mapName;
@@ -37,15 +41,13 @@ private:
 
 	// Returns a list of every collision rectangle we are colliding with(there might be more than 1 if we stand between two for example)
 	std::vector<Rectangle> _collisionRects;
-
-	// Loads a map
-	void loadMap(std::string mapName, Canvas &canvas);
 };
 
 // Tileset structure
 struct Tileset
 {
 	SDL_Texture* _texture;  // Tilest image
+	std::string _filePath;  // Tilest image path
 	int _firstGid;  // The first gid on the tileset
 
 	Tileset()
@@ -53,9 +55,10 @@ struct Tileset
 		_firstGid = -1;
 	}
 
-	Tileset(SDL_Texture* texture, int firstGid)
+	Tileset(SDL_Texture* texture, std::string filePath, int firstGid)
 	{
 		_texture = texture;
+		_filePath = filePath;
 		_firstGid = firstGid;
 	}
 };

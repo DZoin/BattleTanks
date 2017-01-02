@@ -41,6 +41,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Canvas.h" />
+    <ClInclude Include="GlobalActors.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Input.h" />
