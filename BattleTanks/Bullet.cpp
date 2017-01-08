@@ -37,7 +37,7 @@ Bullet::~Bullet()
 void Bullet::update(Level &level, int elapsedTime)
 {
 	std::vector<Actor*> collisionRects = level.checkTileCollision(getBoundingBox());
-	if (collisionRects.size() > 0)
+	if (getBoundingBox().collidesWithMap() || collisionRects.size() > 0)
 	{
 		handleTileCollisions(collisionRects);
 	}

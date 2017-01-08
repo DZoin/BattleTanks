@@ -65,6 +65,12 @@ public:
 			&& (getTop() < other.getBottom() && getBottom() > other.getTop());
 	}
 
+	const bool collidesWithMap() const
+	{
+		return (getRight() > globals::SCREEN_WIDTH || getLeft() < 0)
+			|| (getTop() < 0 || getBottom() > globals::SCREEN_HEIGHT);
+	}
+
 private:
 	int _x, _y, _width, _height;
 };
