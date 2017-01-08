@@ -28,15 +28,22 @@ public:
 	void moveDown();
 	void stopMoving();
 	void shoot();
+	void playMovementSFX();
+	void playShootingSFX();
 
 	virtual void animationDone(std::string currentAnimation);
 	virtual void setUpAnimations();
 	void handleTileCollisions(std::vector<Actor*> &collisionRects);
+
+	/*const inline int getMaxHealth() const { return _maxHealth; }
+	const inline int getCurrentHealth() const { return _currentHealth; }*/
 protected:
 
 	float _dx, _dy;
 	float _prevX, _prevY;
 	int _health_points;
+	/*int _maxHealth;
+	int _currentHealth;*/
 	Direction::Value _direction;
 	Gun* _gun;
 	Bullet* _firedBullet = nullptr;

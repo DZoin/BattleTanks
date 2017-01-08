@@ -22,6 +22,11 @@ private:
 	Tank _tank;	
 	std::list<std::pair<SDL_Scancode, Action*>> _actionList;
 	void initializeActionList();
+	int _maxHealthPlayer1;
+	int _currentHealthPlayer1;
+
+	int _maxHealthPlayer2;
+	int _currentHealthPlayer2;
 public:
 	Player();
 	Player(const Player& other);
@@ -33,4 +38,9 @@ public:
 	void draw(Canvas &canvas);
 	void update(Level &level, int elapsedTime);
 	void evaluateEvent(Input &input, SDL_Event event);
+	const inline int getMaxHealthPlayer1() const { return _maxHealthPlayer1; }
+	const inline int getCurrentHealthPlayer1() const { return _currentHealthPlayer1; }
+
+	const inline int getMaxHealthPlayer2() const { return _maxHealthPlayer2; }
+	const inline int getCurrentHealthPlayer2() const { return _currentHealthPlayer2; }
 };
