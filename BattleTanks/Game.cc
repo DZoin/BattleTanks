@@ -30,7 +30,7 @@ int Game::gameLoop()
 	Input input;
 	SDL_Event event;
 	
-	playMusic();
+	//playMusic();
 	
 	_level = Level("Map1", Vector2(100, 100), canvas);
 	_player = Player(globals::keybinds, Tank(canvas, "Content/Sprites/tank.png",50,50, Direction::down));
@@ -70,6 +70,8 @@ int Game::gameLoop()
 		draw(canvas);
 	}
 }
+
+
 void Game::draw(Canvas &canvas)
 {
 	canvas.clear();
@@ -87,7 +89,9 @@ void Game::update(int elapsedTime)
 	this->_player.update(_level, elapsedTime);
 	this->_player2.update(_level, elapsedTime);
 	_level.update(elapsedTime);
+
 	_hud.update(elapsedTime);
+
 }
 
 void Game::playMusic()
@@ -100,48 +104,47 @@ void Game::playMusic()
 
 		printf("Mix_OpenAudio: %s\n", Mix_GetError());
 
-		exit(2);
+
+		//Declaring and loading of background music OGG type, note mp3 does not work
+
+		// load the MP3 file "music.mp3" to play as music
+
+		Mix_Music *music;
+
+		music = Mix_LoadMUS("Content/BackgroundMusic/backgroundMusic.ogg");
+
+		if (!music)
+		{
+			printf("Mix_LoadMUS(\"backgroundMusic.mp3\"): %s\n", Mix_GetError());
+
+		}
+
+		//End of OGG loading
+
+		//Setting the background music volume - MAX is 128
+
+		// set the music volume to 1/2 maximum, and then check it
+
+		printf("volume was    : %d\n", Mix_VolumeMusic(MIX_MAX_VOLUME / 8));
+
+		printf("volume is now : %d\n", Mix_VolumeMusic(-1));
+
+		//End of setting background music volume
+
+		//Playing music forever
+
+		// play music forever
+
+		// Mix_Music *music; // I assume this has been loaded already
+
+		if (Mix_PlayMusic(music, 1) == -1) {
+
+			printf("Mix_PlayMusic: %s\n", Mix_GetError());
+
+			// well, there's no music, but most games don't break without music...
+		}
+		//End of playing music
+
+
 	}
-
-	//Declaring and loading of background music OGG type, note mp3 does not work
-
-	// load the MP3 file "music.mp3" to play as music
-
-	Mix_Music *music;
-
-	music = Mix_LoadMUS("Content/BackgroundMusic/backgroundMusic.ogg");
-
-	if (!music) 
-	{
-		printf("Mix_LoadMUS(\"backgroundMusic.mp3\"): %s\n", Mix_GetError());
-
-		// this might be a critical error...
-	}
-
-	//End of OGG loading
-
-	//Setting the background music volume - MAX is 128
-
-	// set the music volume to 1/2 maximum, and then check it
-
-	printf("volume was    : %d\n", Mix_VolumeMusic(MIX_MAX_VOLUME / 8));
-
-	printf("volume is now : %d\n", Mix_VolumeMusic(-1));
-
-	//End of setting background music volume
-
-	//Playing music forever
-
-	// play music forever
-
-	// Mix_Music *music; // I assume this has been loaded already
-
-	if (Mix_PlayMusic(music, 1) == -1) {
-
-		printf("Mix_PlayMusic: %s\n", Mix_GetError());
-
-		// well, there's no music, but most games don't break without music...
-	}
-	//End of playing music
-
 }
