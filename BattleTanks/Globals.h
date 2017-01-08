@@ -2,6 +2,8 @@
 #include <vector>
 #include <SDL.h>
 
+class Actor;
+
 namespace globals
 {
 	const int SCREEN_WIDTH = 800;

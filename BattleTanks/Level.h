@@ -20,9 +20,7 @@ public:
 	~Level();
 	void update(int elapsedTime);
 	void draw(Canvas &canvas);
-
-	std::vector<Actor*> checkTileCollision(const Rectangle &other);
-
+	std::vector<Actor*>& getTileList() { return _tileList; }
 	// Loads a map
 	void loadMap(std::string mapName, Canvas &canvas);
 
@@ -36,7 +34,7 @@ private:
 
 	SDL_Texture* _backgroundTexture;
 
-	std::vector<Tile> _tileList;
+	std::vector<Actor*> _tileList;
 	std::vector<Tileset> _tilesets;
 
 	// Returns a list of every collision rectangle we are colliding with(there might be more than 1 if we stand between two for example)

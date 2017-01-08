@@ -40,10 +40,14 @@ int Game::gameLoop()
 	_player2 = Player(globals::player_2_keybinds, tank2);
 
 	_hud = HUD(canvas, _player, _player2);
-	//globals::gameObjects = new vector<Actor*>();
+	globals::gameObjects = new vector<Actor*>();
 	
-	//globals::gameObjects->push_back(&tank);
-	//globals::gameObjects->push_back(&tank2);
+	globals::gameObjects->push_back(&tank);
+	globals::gameObjects->push_back(&tank2);
+	for (auto tile : _level.getTileList())
+	{
+		globals::gameObjects->push_back(tile);
+	}
 
 	playMusic();
 
@@ -74,7 +78,10 @@ int Game::gameLoop()
 		int ELAPSED_TIME_MS = CURRENT_TIME_MS - LAST_UPDATE_TIME;  //How long this current frame took
 		update(std::min(ELAPSED_TIME_MS, MAX_FRAME_TIME));  //If this frame took less than our maximum time, we are going to use that time. If it took more than that, use our maximum time.
 															//It can't go higher than 50 FPS
-
+		if (_player.getTank().isDestoryed() || _player2.getTank().isDestoryed())
+		{
+			return EXIT;
+		}
 		LAST_UPDATE_TIME = CURRENT_TIME_MS;  //Start the initialization again, before the loop begins a new cicle
 		draw(canvas);
 	}
@@ -96,8 +103,8 @@ void Game::draw(Canvas &canvas)
 }
 void Game::update(int elapsedTime)
 {
-	this->_player.update(_level, elapsedTime);
-	this->_player2.update(_level, elapsedTime);
+	this->_player.update(*globals::gameObjects, elapsedTime);
+	this->_player2.update(*globals::gameObjects, elapsedTime);
 	_level.update(elapsedTime);
 
 	_hud.update(elapsedTime);

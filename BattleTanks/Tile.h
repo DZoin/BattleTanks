@@ -12,5 +12,6 @@ public:
 	virtual void update();
 	virtual void draw(Canvas &canvas);
 	virtual void Tile::handleTileCollisions(std::vector<Actor*> &collisionRects);
+	virtual void handleCollision(Actor* collidingActor) {}
 };
 

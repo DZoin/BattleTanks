@@ -137,7 +137,7 @@ void Level::loadMap(std::string mapName, Canvas &canvas)
 						tsyy = tileHeight * amnt;
 
 						// Build the actual tile and add it to the evel's tile list
-						Tile tile(canvas, tls._filePath, tsxx, tsyy, tileWidth, tileHeight, xx, yy);
+						Tile *tile = new Tile(canvas, tls._filePath, tsxx, tsyy, tileWidth, tileHeight, xx, yy);
 						_tileList.push_back(tile);
 						tileCounter++;
 
@@ -201,20 +201,9 @@ void Level::draw(Canvas &canvas)
 {
 	for (int i = 0; i < _tileList.size(); i++)
 	{
-		_tileList.at(i).draw(canvas);
+		_tileList.at(i)->draw(canvas);
 	}
 }
 
-std::vector<Actor*> Level::checkTileCollision(const Rectangle &other)
-{
-	std::vector<Actor*> others;
-	for (int i = 0; i < _tileList.size(); i++)
-	{
-		if (_tileList.at(i).getBoundingBox().collidesWith(other))
-		{
-			others.push_back(&(_tileList.at(i)));
-		}
-	}
-	return others;
-}
+
 

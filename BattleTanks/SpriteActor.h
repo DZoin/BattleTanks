@@ -5,6 +5,7 @@ class SpriteActor : public Actor
 public:
 	SpriteActor() {}
 	SpriteActor(Canvas &canvas, const std::string &filePath, int sourceX, int sourceY, int width, int height, float posX, float posY);
-	void handleTileCollisions(std::vector<Actor*> &collisionRects);
+	void handleTileCollisions(std::vector<Actor*> &collisionRects) {}
+	void handleCollision(Actor* collidingActor) {}
 	void draw(Canvas &canvas);
 };

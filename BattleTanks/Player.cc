@@ -11,7 +11,7 @@ Player::Player(const Player& other) : _keybinds(other._keybinds), _tank(other._t
 
 }
 
-Player::Player(const std::vector<SDL_Scancode> &keybinds, Tank& tank) : _keybinds(keybinds), _tank(tank), _maxHealthPlayer1(100), _currentHealthPlayer1(50), _maxHealthPlayer2(100), _currentHealthPlayer2(20)
+Player::Player(const std::vector<SDL_Scancode> &keybinds, Tank& tank) : _keybinds(keybinds), _tank(&tank), _maxHealthPlayer1(100), _currentHealthPlayer1(50), _maxHealthPlayer2(100), _currentHealthPlayer2(20)
 {	
 	initializeActionList();
 }
@@ -57,7 +57,7 @@ void Player::initializeActionList()
 }
 void Player::switchTank(Tank& tank) {
 	delete &(this->_tank);
-	this->_tank = tank;
+	this->_tank = &tank;
 }
 
 void Player::evaluateEvent(Input &input, SDL_Event event)
@@ -84,12 +84,12 @@ void Player::evaluateEvent(Input &input, SDL_Event event)
 			{
 				auto it = utils::find(_actionList.begin(), _actionList.end(), scancode);
 				action = it->second;
-				action->execute(_tank);
+				action->execute(*_tank);
 			}
 			else if (!input.hasPressedKeys(_keybinds))
 			{
 				action = new StopAction();
-				action->execute(_tank);
+				action->execute(*_tank);
 			}
 			
 			break;
@@ -97,12 +97,12 @@ void Player::evaluateEvent(Input &input, SDL_Event event)
 	}
  }
 
-void Player::update(Level &level, int elapsedTime)
+void Player::update(std::vector<Actor*> actors, int elapsedTime)
 {
-	_tank.update(level, elapsedTime);
+	_tank->update(actors, elapsedTime);
 }
 
 void Player::draw(Canvas &canvas)
 {
- 	_tank.draw(canvas);
+ 	_tank->draw(canvas);
 }

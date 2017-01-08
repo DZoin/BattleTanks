@@ -19,7 +19,7 @@ class Player
 {
 private:
 	std::vector<SDL_Scancode> _keybinds;
-	Tank _tank;	
+	Tank* _tank;	
 	std::list<std::pair<SDL_Scancode, Action*>> _actionList;
 	void initializeActionList();
 	int _maxHealthPlayer1;
@@ -34,9 +34,9 @@ public:
 	~Player();
 	
 	void switchTank(Tank& tank);
-	Tank getTank();
+	Tank& getTank() { return *_tank; }
 	void draw(Canvas &canvas);
-	void update(Level &level, int elapsedTime);
+	void update(std::vector<Actor*> actors, int elapsedTime);
 	void evaluateEvent(Input &input, SDL_Event event);
 	const inline int getMaxHealthPlayer1() const { return _maxHealthPlayer1; }
 	const inline int getCurrentHealthPlayer1() const { return _currentHealthPlayer1; }

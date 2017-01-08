@@ -34,9 +34,9 @@ Bullet::~Bullet()
 {
 
 }
-void Bullet::update(Level &level, int elapsedTime)
+void Bullet::update(std::vector<Actor*> actors, int elapsedTime)
 {
-	std::vector<Actor*> collisionRects = level.checkTileCollision(getBoundingBox());
+	std::vector<Actor*> collisionRects = checkCollision(actors);
 	if (getBoundingBox().collidesWithMap() || collisionRects.size() > 0)
 	{
 		handleTileCollisions(collisionRects);
@@ -54,9 +54,14 @@ void Bullet::draw(Canvas &canvas)
 {
 	Actor::draw(canvas, _x, _y);
 }
-void Bullet::handleTileCollisions(std::vector<Actor*> &collisionRects)
+void Bullet::handleTileCollisions(std::vector<Actor*> &collisions)
 {
 	exploded = true;
+	for (auto collision : collisions)
+	{
+		collision->handleCollision(this);
+	}
+
 }
 bool Bullet::hasExploded()
 {

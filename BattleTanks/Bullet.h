@@ -23,9 +23,10 @@ public:
 	Bullet();
 	Bullet(Direction::Value direction, BulletType::BType type, Canvas &canvas, int sourceX, int sourceY, int width, int height, float x, float y);
 	~Bullet();
-	void update(Level &level, int elapsedTime);
+	void update(std::vector<Actor*> actors, int elapsedTime);
 	void draw(Canvas &canvas);
-	void handleTileCollisions(std::vector<Actor*> &collisionRects);
+	virtual void handleTileCollisions(std::vector<Actor*> &collisionRects);
+	virtual void handleCollision(Actor* collidingActor) {}
 	bool hasExploded();	
 };
 

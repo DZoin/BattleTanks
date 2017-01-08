@@ -15,12 +15,13 @@ class Tank : public AnimatedActor
 {
 private:
 	bool shouldShootBullet = false;
+	bool destroyed = false;
 public:
 	Tank();
 	Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, Direction::Value direction);
 	Tank(Canvas &canvas, const std::string &filePath, float x, float y, Direction::Value direction);
 	void draw(Canvas &canvas);
-	void update(Level &level, int elapsedTime);
+	void update(std::vector<Actor*> actors, int elapsedTime);
 
 	void moveLeft();
 	void moveRight();
@@ -33,7 +34,9 @@ public:
 
 	virtual void animationDone(std::string currentAnimation);
 	virtual void setUpAnimations();
-	void handleTileCollisions(std::vector<Actor*> &collisionRects);
+	virtual void handleTileCollisions(std::vector<Actor*> &collisionRects);
+	virtual void handleCollision(Actor* collidingActor);
+	bool isDestoryed() { return destroyed; }
 
 	/*const inline int getMaxHealth() const { return _maxHealth; }
 	const inline int getCurrentHealth() const { return _currentHealth; }*/

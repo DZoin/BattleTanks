@@ -1,5 +1,7 @@
+#pragma once
 #include <vector>
-#include "Actor.h"
+
+class Actor;
 
 namespace globals
 {

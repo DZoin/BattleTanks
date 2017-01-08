@@ -11,6 +11,7 @@ Actor::Actor(Canvas &canvas, const std::string &filePath, int sourceX, int sourc
 	_sourceRect.w = width;
 	_sourceRect.h = height;
 
+
 	_spriteSheet = SDL_CreateTextureFromSurface(canvas.getRenderer(), canvas.loadImage(filePath));
 
 	if (_spriteSheet == NULL)
@@ -80,6 +81,21 @@ void Actor::setSourceRectW(int value)
 void Actor::setSourceRectH(int value)
 {
 	_sourceRect.h = value;
+}
+
+std::vector<Actor*> Actor::checkCollision(std::vector<Actor*> &actors)
+{
+	std::vector<Actor*> collisions;
+	Rectangle boundingBox = getBoundingBox();
+	for (int i = 0; i < actors.size(); i++)
+	{
+		Actor* actor = actors.at(i);
+		if (this != actor && actor->getBoundingBox().collidesWith(boundingBox))
+		{
+			collisions.push_back(actors.at(i));
+		}
+	}
+	return collisions;
 }
 
 

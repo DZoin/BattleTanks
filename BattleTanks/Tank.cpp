@@ -222,10 +222,12 @@ void Tank::shoot()
 }
 
 
-void Tank::update(Level &level, int elapsedTime)
+void Tank::update(std::vector<Actor*> actors, int elapsedTime)
 {
-	std::vector<Actor*> collisionRects = level.checkTileCollision(getBoundingBox());
-	if (getBoundingBox().collidesWithMap() || collisionRects.size() > 0)
+	Rectangle boundingBox = getBoundingBox();
+	std::vector<Actor*> collisionRects = checkCollision(actors);
+
+	if (boundingBox.collidesWithMap() || collisionRects.size() > 0)
 	{
 		handleTileCollisions(collisionRects);
 	}
@@ -242,7 +244,7 @@ void Tank::update(Level &level, int elapsedTime)
 
 	if (_firedBullet != nullptr)
 	{
-		_firedBullet->update(level, elapsedTime);
+		_firedBullet->update(actors, elapsedTime);
 		if (_firedBullet->hasExploded())
 		{
 			delete _firedBullet;
@@ -252,10 +254,22 @@ void Tank::update(Level &level, int elapsedTime)
 	AnimatedActor::update(elapsedTime);
 }
 
-void Tank::handleTileCollisions(std::vector<Actor*> &collisionRects)
+void Tank::handleTileCollisions(std::vector<Actor*> &collisions)
 {
 	_x = _prevX;
 	_y = _prevY;
+}
+
+void Tank::handleCollision(Actor* collidingActor)
+{
+	if (Bullet* bullet = dynamic_cast<Bullet*>(collidingActor))
+	{
+		_health_points--;
+		if (_health_points <= 0)
+		{
+			destroyed = true;
+		}
+	}
 }
 
 void Tank::draw(Canvas &canvas)

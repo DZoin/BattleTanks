@@ -23,6 +23,8 @@ public:
 	virtual const Rectangle getBoundingBox() const;
 	const sides::Side getCollisionSide(Rectangle &other) const;
 	virtual void handleTileCollisions(std::vector<Actor*> &collisionRects) = 0;
+	virtual void handleCollision(Actor* collidingActor) = 0;
+	std::vector<Actor*> checkCollision(std::vector<Actor*> &actors);
 
 	const inline float getX() const { return _x; }
 	const inline float getY() const { return _y; }
