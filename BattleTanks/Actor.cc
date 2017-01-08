@@ -42,7 +42,7 @@ const Rectangle Actor::getBoundingBox() const
 
 // Side getCollisionSide
 // Determine which side the collision happened on
-const sides::Side Actor::getcollisionSide(Rectangle &other) const
+const sides::Side Actor::getCollisionSide(Rectangle &other) const
 {
 	int amtRight, amtLeft, amtTop, amtBottom;
 	amtRight = getBoundingBox().getRight() - other.getLeft();

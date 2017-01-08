@@ -30,7 +30,7 @@ int Game::gameLoop()
 	Input input;
 	SDL_Event event;
 	
-	playMusic();
+	//playMusic();
 	
 	_player = Player(globals::keybinds, Tank(canvas, "Content/Sprites/tank.png",50,50, Direction::down));
 	_player2 = Player(globals::player_2_keybinds, Tank(canvas, "Content/Sprites/tank.png", 700, 500, Direction::up));
@@ -83,20 +83,9 @@ void Game::draw(Canvas &canvas)
 }
 void Game::update(int elapsedTime)
 {
-	this->_player.update(elapsedTime);
-	this->_player2.update(elapsedTime);
+	this->_player.update(_level, elapsedTime);
+	this->_player2.update(_level, elapsedTime);
 	_level.update(elapsedTime);
-
-	// Check collisions
-	std::vector<Rectangle> others;
-	if ((others = _level.checkTileCollision(_player.getBoundingBox())).size() > 0 && (others = _level.checkTileCollision(_player2.getBoundingBox())).size() > 0)
-	{
-		// Player collided with at least one tile. Handle it
-		//-- _player.handleTileCollisions(others);
-		_player.toPrev();
-		_player2.toPrev();
-
-	}
 }
 
 void Game::playMusic()

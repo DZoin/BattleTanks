@@ -1,18 +1,64 @@
 #include "Bullet.h"
 
 
-/*bool checkForCollisions()
+Bullet::Bullet(Direction::Value direction, BulletType::BType type,  Canvas &canvas, int sourceX, int sourceY, int width, int height, float x, float y) 
+	: Actor(canvas, "Content/Sprites/tank.png", sourceX, sourceY, width, height, x, y)
 {
-	//TO DO check bullet collisions
-	return false;
+	_direction = direction;
+	_bullet_type = type;
+	switch (direction)
+	{
+	case Direction::up:
+	{
+		_dy = -bullet_constants::NORMAL_SPEED;
+		break;
+	}
+	case Direction::left:
+	{
+		_dx = -bullet_constants::NORMAL_SPEED;
+		break;
+	}
+	case Direction::down:
+	{
+		_dy = bullet_constants::NORMAL_SPEED;
+		break;
+	}
+	case Direction::right:
+	{
+		_dx = bullet_constants::NORMAL_SPEED;
+		break;
+	}
+	}
 }
-
-void Bullet::update(int elapsedTime)
+Bullet::~Bullet()
 {
-	//TO DO
-}
 
+}
+void Bullet::update(Level &level, int elapsedTime)
+{
+	std::vector<Rectangle> collisionRects = level.checkTileCollision(getBoundingBox());
+	if (collisionRects.size() > 0)
+	{
+		handleTileCollisions(collisionRects);
+	}
+	else
+	{
+		// Move by _dx
+		_x += _dx * elapsedTime;
+		// Move by _dy
+		_y += _dy * elapsedTime;
+	}
+	Actor::update();
+}
 void Bullet::draw(Canvas &canvas)
 {
-	//TO DO
-} */
+	Actor::draw(canvas, _x, _y);
+}
+void Bullet::handleTileCollisions(std::vector<Rectangle> &collisionRects)
+{
+	exploded = true;
+}
+bool Bullet::hasExploded()
+{
+	return exploded;
+}

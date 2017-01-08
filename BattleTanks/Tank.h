@@ -1,5 +1,6 @@
 #pragma once
 #include "AnimatedActor.h"
+#include "Level.h"
 #include "Gun.h"
 
 namespace tank_constants
@@ -12,14 +13,14 @@ namespace tank_constants
 
 class Tank : public AnimatedActor
 {
+private:
+	bool shouldShootBullet = false;
 public:
 	Tank();
 	Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, Direction::Value direction);
 	Tank(Canvas &canvas, const std::string &filePath, float x, float y, Direction::Value direction);
 	void draw(Canvas &canvas);
-	void update(int elapsedTime);
-	//Added by Ilko when splicing
-	void toPrev();
+	void update(Level &level, int elapsedTime);
 
 	void moveLeft();
 	void moveRight();
@@ -32,20 +33,11 @@ public:
 
 	virtual void animationDone(std::string currentAnimation);
 	virtual void setUpAnimations();
-
-	//Added by Ilko when splicign start
-	void handleTileCollisions(std::vector<Rectangle> &others);
-
-	const float getX() const;
-	const float getY() const;
-	//Added by Ilko when splicign end
-
-
+	void handleTileCollisions(std::vector<Rectangle> &collisionRects);
 protected:
-	//Added by Ilko when splicing
-	float prevX, prevY;
 
 	float _dx, _dy;
+	float _prevX, _prevY;
 	int _health_points;
 	Direction::Value _direction;
 	Gun* _gun;

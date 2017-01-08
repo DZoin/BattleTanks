@@ -61,15 +61,8 @@ public:
 	// Takes in another Rectangle and checks if they are colliding
 	const bool collidesWith(const Rectangle &other)
 	{
-	 return getRight() >= other.getLeft() &&
-			getLeft() <= other.getRight() &&
-			getTop() <= other.getBottom() &&
-			getBottom() >= other.getTop();
-	}
-
-	const bool isValidRectangle() const
-	{
-		return (_x >= 0 && _y >= 0 && _width >= 0 && _height >= 0);
+	 return (getRight() > other.getLeft() && getLeft() < other.getRight() ) 
+			&& (getTop() < other.getBottom() && getBottom() > other.getTop());
 	}
 
 private:

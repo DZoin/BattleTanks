@@ -12,9 +12,10 @@
 #include "MoveLeftAction.h"
 #include "StopAction.h"
 #include "ShootAction.h"
+#include "Level.h"
 
 
-class Player : public Actor
+class Player
 {
 private:
 	std::vector<SDL_Scancode> _keybinds;
@@ -26,26 +27,10 @@ public:
 	Player(const Player& other);
 	Player(const std::vector<SDL_Scancode>&, Tank& tank);
 	~Player();
-
-	//Added by Ilko when splicing
-	void toPrev();
-
-	//Added by Ilko when splicign start
-	void handleTileCollisions(std::vector<Rectangle> &others);
-
-	const Rectangle Player::getBoundingBox() const;
-
-	const float getX() const;
-	const float getY() const;
-	//Added by Ilko when splicign end
-
-	Player& operator=(const Player &other);
+	
 	void switchTank(Tank& tank);
+	Tank getTank();
 	void draw(Canvas &canvas);
-	void update(int elapsedTime);
+	void update(Level &level, int elapsedTime);
 	void evaluateEvent(Input &input, SDL_Event event);
-
-protected:
-	//Added by Ilko when splicing
-	float prevX, prevY;
 };
