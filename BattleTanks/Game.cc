@@ -19,6 +19,7 @@ Game::Game()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	//Added by Ilko while splicing
+	
 	gameLoop();
 }
 Game::~Game()
@@ -30,12 +31,12 @@ int Game::gameLoop()
 	Canvas canvas("Battle Tanks", 800, 600);
 	Input input;
 	SDL_Event event;
-	
+
 	_level = Level("Map1", Vector2(100, 100), canvas);
 	_level.loadMap("Map1", canvas);
 
-	auto tank = Tank(canvas, "Content/Sprites/tank.png", 50, 50, Direction::down);
-	auto tank2 = Tank(canvas, "Content/Sprites/tank.png", 700, 500, Direction::up);
+	auto tank = Tank(canvas, "Content/Sprites/tankExplosion.png", 50, 50, Direction::down);
+	auto tank2 = Tank(canvas, "Content/Sprites/tankExplosion.png", 700, 500, Direction::up);
 	_player = Player(globals::keybinds, tank);
 	_player2 = Player(globals::player_2_keybinds, tank2);
 
@@ -49,9 +50,10 @@ int Game::gameLoop()
 		globals::gameObjects->push_back(tile);
 	}
 
-	playMusic();
 
 	int LAST_UPDATE_TIME = SDL_GetTicks();  //SDL_GetTick -> gets the number of milliseconds since the SDL libraly was initialized
+
+	playMusic();
 
 	while (true)
 	{
@@ -120,6 +122,7 @@ void Game::playMusic()
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
 
 		printf("Mix_OpenAudio: %s\n", Mix_GetError());
+	}
 
 
 		//Declaring and loading of background music OGG type, note mp3 does not work
@@ -164,4 +167,4 @@ void Game::playMusic()
 
 
 	}
-}
+

@@ -6,19 +6,19 @@ Bullet* BasicGun::shoot(Direction::Value direction, Canvas &canvas, float x, flo
 	{
 		case Direction::up: 
 		{
-			return new Bullet(direction, BulletType::Basic, canvas, 0, 0, 16, 16, x, y-32);
+			return new Bullet(direction, BulletType::Basic, canvas, 0, 0, 4, 4, x+10, y-8);
 		}
 		case Direction::left:
 		{
-			return new Bullet(direction, BulletType::Basic, canvas, 32, 0, 16, 16, x-32, y);
+			return new Bullet(direction, BulletType::Basic, canvas, 8, 0, 4, 4, x-8, y+11);
 		}
 		case Direction::down:
 		{
-			return new Bullet(direction, BulletType::Basic, canvas, 64, 0, 16, 16, x, y+32);
+			return new Bullet(direction, BulletType::Basic, canvas, 16, 0, 4, 4, x+10, y+32);
 		}
 		case Direction::right:
 		{
-			return new Bullet(direction, BulletType::Basic, canvas, 96, 0, 16, 16, x+32, y);
+			return new Bullet(direction, BulletType::Basic, canvas, 24, 0, 4, 4, x+32, y+11);
 		}
 	}
 }

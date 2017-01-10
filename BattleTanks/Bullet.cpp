@@ -2,7 +2,7 @@
 
 
 Bullet::Bullet(Direction::Value direction, BulletType::BType type,  Canvas &canvas, int sourceX, int sourceY, int width, int height, float x, float y) 
-	: Actor(canvas, "Content/Sprites/tank.png", sourceX, sourceY, width, height, x, y)
+	: Actor(canvas, "Content/Sprites/bullets.png", sourceX, sourceY, width, height, x, y)
 {
 	_direction = direction;
 	_bullet_type = type;
