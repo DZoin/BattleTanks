@@ -14,6 +14,7 @@ private:
 	void draw(Canvas &graphics);
 	void update(int elapsedTime);
 	void playMusic();
+	void playDeathSFX();
 
 	Player _player;
 	Player _player2;

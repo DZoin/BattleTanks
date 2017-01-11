@@ -8,6 +8,9 @@ namespace tank_constants
 	const float NORMAL_SPEED = 0.1f;
 	const std::vector <std::string> _idleAnimations = { "IdleUp", "IdleDown", "IdleLeft", "IdleRight" };
 	const std::vector <std::string> _moveAnimations = { "DriveUp", "DriveDown", "DriveLeft", "DriveRight" };
+	const std::string _deathAnimation1 = "Explosion1";
+	//const std::string _deathAnimation2 = "Explosion2";
+
 }
 
 
@@ -31,6 +34,8 @@ public:
 	void shoot();
 	void playMovementSFX();
 	void playShootingSFX();
+	void playIddleSFX();
+
 
 	virtual void animationDone(std::string currentAnimation);
 	virtual void setUpAnimations();
@@ -40,6 +45,8 @@ public:
 
 	/*const inline int getMaxHealth() const { return _maxHealth; }
 	const inline int getCurrentHealth() const { return _currentHealth; }*/
+
+	void playAnimation(const string& animation);
 protected:
 
 	float _dx, _dy;
@@ -50,6 +57,6 @@ protected:
 	Direction::Value _direction;
 	Gun* _gun;
 	Bullet* _firedBullet = nullptr;
-	void playAnimation(const string& animation);
+	//void playAnimation(const string& animation);
 };
 

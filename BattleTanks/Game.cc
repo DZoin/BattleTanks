@@ -36,7 +36,7 @@ int Game::gameLoop()
 	_level.loadMap("Map1", canvas);
 
 	auto tank = Tank(canvas, "Content/Sprites/tankExplosion.png", 50, 50, Direction::down);
-	auto tank2 = Tank(canvas, "Content/Sprites/tankExplosion.png", 700, 500, Direction::up);
+	auto tank2 = Tank(canvas, "Content/Sprites/tankExplosion.png", 90, 70, Direction::up);
 	_player = Player(globals::keybinds, tank);
 	_player2 = Player(globals::player_2_keybinds, tank2);
 
@@ -53,7 +53,8 @@ int Game::gameLoop()
 
 	int LAST_UPDATE_TIME = SDL_GetTicks();  //SDL_GetTick -> gets the number of milliseconds since the SDL libraly was initialized
 
-	playMusic();
+	
+	//playMusic();
 
 	while (true)
 	{
@@ -80,10 +81,22 @@ int Game::gameLoop()
 		int ELAPSED_TIME_MS = CURRENT_TIME_MS - LAST_UPDATE_TIME;  //How long this current frame took
 		update(std::min(ELAPSED_TIME_MS, MAX_FRAME_TIME));  //If this frame took less than our maximum time, we are going to use that time. If it took more than that, use our maximum time.
 															//It can't go higher than 50 FPS
-		if (_player.getTank().isDestoryed() || _player2.getTank().isDestoryed())
-		{
-			return EXIT;
-		}
+		/*if (_player.getTank().isDestoryed() || _player2.getTank().isDestoryed())
+		{*/
+			if (_player.getTank().isDestoryed())
+			{
+				_player.getTank().playAnimation(tank_constants::_deathAnimation1);
+				playDeathSFX();
+				return EXIT;
+			}
+			if (_player2.getTank().isDestoryed())
+			{
+				_player2.getTank().playAnimation(tank_constants::_deathAnimation1);
+				playDeathSFX();
+				return EXIT;
+			}
+			//return EXIT;
+		//}
 		LAST_UPDATE_TIME = CURRENT_TIME_MS;  //Start the initialization again, before the loop begins a new cicle
 		draw(canvas);
 	}
@@ -111,6 +124,58 @@ void Game::update(int elapsedTime)
 
 	_hud.update(elapsedTime);
 
+}
+
+void Game::playDeathSFX()
+{
+	// open 44.1KHz, signed 16bit, system byte order,
+
+	// stereo audio, using 1024 byte chunks
+
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+
+		printf("Mix_OpenAudio: %s\n", Mix_GetError());
+	}
+
+
+	//End of initialization
+
+	//Declaring and loading a wav file, used for movements and actions
+
+	// load sample.wav in to sample
+	Mix_Chunk *sample;
+	sample = Mix_LoadWAV("Content/SondFX(WAVs)/deathSound.wav");
+	if (!sample) {
+		printf("Mix_LoadWAV: %s\n", Mix_GetError());
+		// handle error
+
+	}
+
+	//End of WAV loading
+
+	// set channel 2 to half volume
+
+	Mix_Volume(4, MIX_MAX_VOLUME / 6);
+
+	// print the average volume
+
+	printf("1st channel volume is %d\n", Mix_Volume(2, -1));
+
+	// play sample on first free unreserved channel
+
+	// play it exactly once through
+
+	// Mix_Chunk *sample; //previously loaded
+
+	if (Mix_PlayChannel(4, sample, 0) == -1) {
+
+		printf("Mix_PlayChannel: %s\n", Mix_GetError());
+
+		// may be critical error, or maybe just no channels were free.
+
+		// you could allocated another channel in that case...S
+
+	}
 }
 
 void Game::playMusic()

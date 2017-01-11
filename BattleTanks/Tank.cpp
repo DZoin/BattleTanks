@@ -71,7 +71,7 @@ void Tank::playShootingSFX()
 	}
 }
 
-	void Tank::playMovementSFX()
+void Tank::playMovementSFX()
 	{
 		// open 44.1KHz, signed 16bit, system byte order,
 
@@ -123,6 +123,58 @@ void Tank::playShootingSFX()
 		}
 	}
 
+void Tank::playIddleSFX()
+{
+	// open 44.1KHz, signed 16bit, system byte order,
+
+	// stereo audio, using 1024 byte chunks
+
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+
+		printf("Mix_OpenAudio: %s\n", Mix_GetError());
+	}
+
+
+	//End of initialization
+
+	//Declaring and loading a wav file, used for movements and actions
+
+	// load sample.wav in to sample
+	Mix_Chunk *sample;
+	sample = Mix_LoadWAV("Content/SondFX(WAVs)/iddleSound.wav");
+	if (!sample) {
+		printf("Mix_LoadWAV: %s\n", Mix_GetError());
+		// handle error
+
+	}
+
+	//End of WAV loading
+
+	// set channel 2 to half volume
+
+	Mix_Volume(5, MIX_MAX_VOLUME / 6);
+
+	// print the average volume
+
+	printf("1st channel volume is %d\n", Mix_Volume(2, -1));
+
+	// play sample on first free unreserved channel
+
+	// play it exactly once through
+
+	// Mix_Chunk *sample; //previously loaded
+
+	if (Mix_PlayChannelTimed(5, sample, -1, -1) == -1) {
+
+		printf("Mix_PlayChannel: %s\n", Mix_GetError());
+
+		// may be critical error, or maybe just no channels were free.
+
+		// you could allocated another channel in that case...S
+
+	}
+}
+
 void Tank::playAnimation(const string& animation)
 {
 	AnimatedActor::playAnimation(animation);
@@ -141,6 +193,8 @@ void Tank::setUpAnimations()
 	addAnimation(2, 4, 0, "DriveDown", 16, 16, Vector2(0, 0));
 	addAnimation(2, 6, 0, "DriveRight", 16, 16, Vector2(0, 0));
 
+	addAnimation(3, 0, 128, "Explosion1", 16, 16, Vector2(0, 0));
+	//addAnimation(2, 0, 144, "Explosion2", 32, 32, Vector2(0, 0));
 }
 
 void Tank::animationDone(std::string currentAnimation) {}
@@ -153,6 +207,8 @@ void Tank::moveUp()
 	this->_direction = Direction::up;
 	this->playAnimation(tank_constants::_moveAnimations[_direction]);
 	this->playMovementSFX();
+
+	Mix_Pause(5);
 
 	if (Mix_Paused(2) == 1)
 	{
@@ -167,6 +223,9 @@ void Tank::moveDown()
 	this->_direction = Direction::down;
 	this->playAnimation(tank_constants::_moveAnimations[_direction]);
 	this->playMovementSFX();
+
+	Mix_Pause(5);
+
 
 	if (Mix_Paused(2) == 1)
 	{
@@ -183,6 +242,9 @@ void Tank::moveRight()
 	this->playAnimation(tank_constants::_moveAnimations[_direction]);
 	this->playMovementSFX();
 
+	Mix_Pause(5);
+
+
 	if (Mix_Paused(2) == 1)
 	{
 		Mix_Resume(2);
@@ -197,6 +259,9 @@ void Tank::moveLeft()
 	this->playAnimation(tank_constants::_moveAnimations[_direction]);
 	this->playMovementSFX();
 
+	Mix_Pause(5);
+
+
 	if (Mix_Paused(2) == 1)
 	{
 		Mix_Resume(2);
@@ -210,6 +275,12 @@ void Tank::stopMoving()
 	this->playAnimation(tank_constants::_idleAnimations[_direction]);
 	// pause all sample playback
 	Mix_Pause(2);
+	this->playIddleSFX();
+
+	if (Mix_Paused(5) == 1)
+	{
+		Mix_Resume(5);
+	}
 }
 
 void Tank::shoot() 
