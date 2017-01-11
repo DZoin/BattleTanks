@@ -6,9 +6,9 @@
 
 Tank::Tank(){}
 
-Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Direction::Value direction) : Tank(canvas, filePath, x, y, new BasicGun(), direction) {}
+Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Direction::Value direction) : Tank(canvas, filePath, x, y, new BasicGun(), 4, direction) {}
 
-Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, Direction::Value direction) : AnimatedActor(canvas, filePath, 0, 0, 16, 16, x, y, 100)
+Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, int health_points, Direction::Value direction) : AnimatedActor(canvas, filePath, 0, 0, 16, 16, x, y, 100)
 {
 	canvas.loadImage(filePath);
 	_prevX = x;
@@ -16,6 +16,7 @@ Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* g
 
 	this->_direction = direction;
 	this->_gun = gun;
+	this->_health_points = health_points;
 
 	setUpAnimations();
 	stopMoving();
@@ -229,7 +230,7 @@ void Tank::update(std::vector<Actor*> actors, int elapsedTime)
 
 	if (boundingBox.collidesWithMap() || collisionRects.size() > 0)
 	{
-		handleTileCollisions(collisionRects);
+		handleCollisions(collisionRects);
 	}
 	else
 	{
@@ -254,13 +255,13 @@ void Tank::update(std::vector<Actor*> actors, int elapsedTime)
 	AnimatedActor::update(elapsedTime);
 }
 
-void Tank::handleTileCollisions(std::vector<Actor*> &collisions)
+void Tank::handleCollisions(std::vector<Actor*> &collisions)
 {
 	_x = _prevX;
 	_y = _prevY;
 }
 
-void Tank::handleCollision(Actor* collidingActor)
+void Tank::onCollision(Actor* collidingActor)
 {
 	if (Bullet* bullet = dynamic_cast<Bullet*>(collidingActor))
 	{

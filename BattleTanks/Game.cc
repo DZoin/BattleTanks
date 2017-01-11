@@ -18,8 +18,6 @@ namespace
 Game::Game()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	//Added by Ilko while splicing
-	gameLoop();
 }
 Game::~Game()
 {
@@ -85,7 +83,7 @@ int Game::gameLoop()
 		LAST_UPDATE_TIME = CURRENT_TIME_MS;  //Start the initialization again, before the loop begins a new cicle
 		draw(canvas);
 	}
-	//delete globals::gameObjects;
+	delete globals::gameObjects;
 }
 
 

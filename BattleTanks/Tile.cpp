@@ -17,7 +17,12 @@ void Tile::draw(Canvas &canvas)
 {
 	Actor::draw(canvas);
 }
-void Tile::handleTileCollisions(std::vector<Actor*> &collisionRects)
+void Tile::handleCollisions(std::vector<Actor*> &collisionRects)
+{
+
+}
+
+void Tile::onCollision(Actor* collidingActor)
 {
 
 }

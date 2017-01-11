@@ -18,7 +18,7 @@ private:
 	bool destroyed = false;
 public:
 	Tank();
-	Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, Direction::Value direction);
+	Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, int health_points, Direction::Value direction);
 	Tank(Canvas &canvas, const std::string &filePath, float x, float y, Direction::Value direction);
 	void draw(Canvas &canvas);
 	void update(std::vector<Actor*> actors, int elapsedTime);
@@ -34,8 +34,8 @@ public:
 
 	virtual void animationDone(std::string currentAnimation);
 	virtual void setUpAnimations();
-	virtual void handleTileCollisions(std::vector<Actor*> &collisionRects);
-	virtual void handleCollision(Actor* collidingActor);
+	virtual void handleCollisions(std::vector<Actor*> &collisionRects);
+	virtual void onCollision(Actor* collidingActor);
 	bool isDestoryed() { return destroyed; }
 
 	/*const inline int getMaxHealth() const { return _maxHealth; }
