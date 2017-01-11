@@ -9,15 +9,17 @@ class Game
 public:
 	Game();
 	~Game();
-	int gameLoop();
+	int startGame();
 private:
 	void draw(Canvas &graphics);
 	void update(int elapsedTime);
 	void playMusic();
 	void playDeathSFX();
+	int gameLoop();
 
 	Player _player;
 	Player _player2;
+	bool retry = true;
 
 	Level _level;
 
