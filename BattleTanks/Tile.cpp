@@ -1,5 +1,6 @@
 #include "Tile.h"
 #include "Canvas.h"
+#include "Bullet.h"
 #include <SDL.h>
 
 Tile::Tile():Actor() {}
@@ -17,7 +18,15 @@ void Tile::draw(Canvas &canvas)
 {
 	Actor::draw(canvas);
 }
-void Tile::handleTileCollisions(std::vector<Actor*> &collisionRects)
+void Tile::handleCollisions(std::vector<Actor*> &collisionRects)
 {
 
+}
+
+void Tile::onCollision(Actor* collidingActor)
+{
+	if (Bullet* bullet = dynamic_cast<Bullet*>(collidingActor))
+	{
+
+	}
 }

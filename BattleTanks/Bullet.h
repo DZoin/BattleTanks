@@ -25,8 +25,8 @@ public:
 	~Bullet();
 	void update(std::vector<Actor*> actors, int elapsedTime);
 	void draw(Canvas &canvas);
-	virtual void handleTileCollisions(std::vector<Actor*> &collisionRects);
-	virtual void handleCollision(Actor* collidingActor) {}
+	virtual void handleCollisions(std::vector<Actor*> &collisionRects);
+	virtual void onCollision(Actor* collidingActor) {}
 	bool hasExploded();	
 };
 

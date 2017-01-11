@@ -8,7 +8,7 @@ namespace tank_constants
 	const float NORMAL_SPEED = 0.1f;
 	const std::vector <std::string> _idleAnimations = { "IdleUp", "IdleDown", "IdleLeft", "IdleRight" };
 	const std::vector <std::string> _moveAnimations = { "DriveUp", "DriveDown", "DriveLeft", "DriveRight" };
-	const std::string _deathAnimation1 = "Explosion1";
+	const std::string _deathAnimation = "Explosion1";
 	//const std::string _deathAnimation2 = "Explosion2";
 
 }
@@ -21,7 +21,7 @@ private:
 	bool destroyed = false;
 public:
 	Tank();
-	Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, Direction::Value direction);
+	Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, int health_points, Direction::Value direction);
 	Tank(Canvas &canvas, const std::string &filePath, float x, float y, Direction::Value direction);
 	void draw(Canvas &canvas);
 	void update(std::vector<Actor*> actors, int elapsedTime);
@@ -35,16 +35,17 @@ public:
 	void playMovementSFX();
 	void playShootingSFX();
 	void playIddleSFX();
+	void playDeathSFX();
 
 
 	virtual void animationDone(std::string currentAnimation);
 	virtual void setUpAnimations();
-	virtual void handleTileCollisions(std::vector<Actor*> &collisionRects);
-	virtual void handleCollision(Actor* collidingActor);
+	virtual void handleCollisions(std::vector<Actor*> &collisionRects);
+	virtual void onCollision(Actor* collidingActor);
 	bool isDestoryed() { return destroyed; }
 
-	/*const inline int getMaxHealth() const { return _maxHealth; }
-	const inline int getCurrentHealth() const { return _currentHealth; }*/
+	const inline int getMaxHealth() const { return _maxHealth; }
+	const inline int getCurrentHealth() const { return _currentHealth; }
 
 	void playAnimation(const string& animation);
 protected:
@@ -52,11 +53,10 @@ protected:
 	float _dx, _dy;
 	float _prevX, _prevY;
 	int _health_points;
-	/*int _maxHealth;
-	int _currentHealth;*/
+	int _maxHealth;
+	int _currentHealth;
 	Direction::Value _direction;
 	Gun* _gun;
 	Bullet* _firedBullet = nullptr;
-	//void playAnimation(const string& animation);
 };
 

@@ -6,9 +6,9 @@
 
 Tank::Tank(){}
 
-Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Direction::Value direction) : Tank(canvas, filePath, x, y, new BasicGun(), direction) {}
+Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Direction::Value direction) : Tank(canvas, filePath, x, y, new BasicGun(), 4, direction) {}
 
-Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, Direction::Value direction) : AnimatedActor(canvas, filePath, 0, 0, 16, 16, x, y, 100)
+Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* gun, int health_points, Direction::Value direction) : AnimatedActor(canvas, filePath, 0, 0, 16, 16, x, y, 100)
 {
 	canvas.loadImage(filePath);
 	_prevX = x;
@@ -16,9 +16,61 @@ Tank::Tank(Canvas &canvas, const std::string &filePath, float x, float y, Gun* g
 
 	this->_direction = direction;
 	this->_gun = gun;
+	this->_health_points = health_points;
 
 	setUpAnimations();
 	stopMoving();
+}
+
+void Tank::playDeathSFX()
+{
+	// open 44.1KHz, signed 16bit, system byte order,
+
+	// stereo audio, using 1024 byte chunks
+
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+		printf("Mix_OpenAudio: %s\n", Mix_GetError());
+	}
+
+
+	//End of initialization
+
+	//Declaring and loading a wav file, used for movements and actions
+
+	// load sample.wav in to sample
+	Mix_Chunk *sample;
+	sample = Mix_LoadWAV("Content/SondFX(WAVs)/deathSound.wav");
+	if (!sample) {
+		printf("Mix_LoadWAV: %s\n", Mix_GetError());
+		// handle error
+
+	}
+
+	//End of WAV loading
+
+	// set channel 2 to half volume
+
+	Mix_Volume(4, MIX_MAX_VOLUME / 6);
+
+	// print the average volume
+
+	printf("1st channel volume is %d\n", Mix_Volume(2, -1));
+
+	// play sample on first free unreserved channel
+
+	// play it exactly once through
+
+	// Mix_Chunk *sample; //previously loaded
+
+	if (Mix_PlayChannel(4, sample, 0) == -1) {
+
+		printf("Mix_PlayChannel: %s\n", Mix_GetError());
+
+		// may be critical error, or maybe just no channels were free.
+
+		// you could allocated another channel in that case...S
+
+	}
 }
 
 void Tank::playShootingSFX()
@@ -197,7 +249,13 @@ void Tank::setUpAnimations()
 	//addAnimation(2, 0, 144, "Explosion2", 32, 32, Vector2(0, 0));
 }
 
-void Tank::animationDone(std::string currentAnimation) {}
+void Tank::animationDone(std::string currentAnimation) {
+	if (tank_constants::_deathAnimation.compare(currentAnimation) == 0)
+	{
+		destroyed = true;
+	}
+
+}
 
 
 void Tank::moveUp()
@@ -300,7 +358,7 @@ void Tank::update(std::vector<Actor*> actors, int elapsedTime)
 
 	if (boundingBox.collidesWithMap() || collisionRects.size() > 0)
 	{
-		handleTileCollisions(collisionRects);
+		handleCollisions(collisionRects);
 	}
 	else
 	{
@@ -325,23 +383,25 @@ void Tank::update(std::vector<Actor*> actors, int elapsedTime)
 	AnimatedActor::update(elapsedTime);
 }
 
-void Tank::handleTileCollisions(std::vector<Actor*> &collisions)
+void Tank::handleCollisions(std::vector<Actor*> &collisions)
 {
 	_x = _prevX;
 	_y = _prevY;
 }
 
-void Tank::handleCollision(Actor* collidingActor)
+void Tank::onCollision(Actor* collidingActor)
 {
 	if (Bullet* bullet = dynamic_cast<Bullet*>(collidingActor))
 	{
 		_health_points--;
 		if (_health_points <= 0)
 		{
-			destroyed = true;
+			playAnimation(tank_constants::_deathAnimation);
+			playDeathSFX();
 		}
 	}
 }
+
 
 void Tank::draw(Canvas &canvas)
 {
